@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="arcade">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Style Explorer — Pixel Art Masterclass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Press+Start+2P&family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  /* ---------- THEME TOKENS ---------- */
+  [data-theme="arcade"]{
+    --bg:#14121d;--panel:#1f1c2e;--panel2:#262238;--ink:#ece9f5;--muted:#a7a0c2;--line:#352f4d;
+    --accent:#7cf0a0;--accent2:#ff5d73;--radius:10px;--bw:1px;--card-shadow:0 8px 24px rgba(0,0,0,.4);
+    --fhead:'Space Grotesk',sans-serif;--fbody:'Inter',sans-serif;--fui:'Space Mono',monospace;
+    --fchip:'Press Start 2P',monospace;--chipsize:9px;--htt:none;--hw:700;}
+  [data-theme="editorial"]{
+    --bg:#faf7f1;--panel:#ffffff;--panel2:#f3ece0;--ink:#2a2521;--muted:#8a8073;--line:#e7ded0;
+    --accent:#c2532f;--accent2:#3f7d6b;--radius:6px;--bw:1px;--card-shadow:0 10px 30px rgba(80,60,30,.09);
+    --fhead:'Fraunces',serif;--fbody:'Inter',sans-serif;--fui:'Inter',sans-serif;
+    --fchip:'Inter',sans-serif;--chipsize:11px;--htt:none;--hw:600;}
+  [data-theme="brutalist"]{
+    --bg:#f4f1e4;--panel:#ffffff;--panel2:#fff3c4;--ink:#141414;--muted:#56524a;--line:#141414;
+    --accent:#ffd23f;--accent2:#2f6df0;--radius:0px;--bw:3px;--card-shadow:6px 6px 0 #141414;
+    --fhead:'Archivo',sans-serif;--fbody:'Inter',sans-serif;--fui:'Space Mono',monospace;
+    --fchip:'Space Mono',monospace;--chipsize:11px;--htt:uppercase;--hw:800;}
+  [data-theme="minimal"]{
+    --bg:#ffffff;--panel:#ffffff;--panel2:#f6f6f8;--ink:#1b1b1f;--muted:#6b7280;--line:#ececf0;
+    --accent:#4f46e5;--accent2:#0ea5e9;--radius:14px;--bw:1px;--card-shadow:0 6px 22px rgba(20,20,40,.07);
+    --fhead:'Inter',sans-serif;--fbody:'Inter',sans-serif;--fui:'Inter',sans-serif;
+    --fchip:'Inter',sans-serif;--chipsize:11px;--htt:none;--hw:700;}
+
+  body{background:var(--bg);color:var(--ink);font-family:var(--fbody);line-height:1.65;transition:background .25s,color .25s;}
+  img{image-rendering:pixelated;image-rendering:crisp-edges;}
+
+  /* ---------- TOOLBAR (theme-independent) ---------- */
+  .bar{position:sticky;top:0;z-index:10;background:#0d0b14;color:#ece9f5;border-bottom:1px solid #2a2640;
+    padding:12px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-family:'Space Mono',monospace;}
+  .bar .t{font-weight:700;letter-spacing:.04em;font-size:14px;}
+  .bar .t span{color:#7cf0a0}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto;}
+  .tab{cursor:pointer;border:1px solid #3a3558;background:#1b1830;color:#cfc9e8;padding:7px 13px;border-radius:8px;
+    font:inherit;font-size:12px;transition:.15s;}
+  .tab:hover{border-color:#7cf0a0;color:#fff;}
+  .tab.on{background:#7cf0a0;color:#13111c;border-color:#7cf0a0;font-weight:700;}
+
+  /* ---------- INFO STRIP ---------- */
+  .info{background:var(--panel2);border-bottom:var(--bw) solid var(--line);padding:14px 20px;}
+  .info .iwrap{max-width:860px;margin:0 auto;display:flex;gap:20px;flex-wrap:wrap;align-items:baseline;}
+  .info h3{font-family:var(--fhead);font-weight:var(--hw);text-transform:var(--htt);margin:0;font-size:18px;color:var(--ink);}
+  .info .meta{font-family:var(--fui);font-size:12px;color:var(--muted);}
+  .info .meta b{color:var(--ink);font-weight:600;}
+  .lf{font-family:var(--fui);font-size:11px;padding:3px 9px;border:var(--bw) solid var(--line);border-radius:6px;color:var(--ink);background:var(--panel);}
+
+  /* ---------- LESSON PREVIEW ---------- */
+  .wrap{max-width:760px;margin:0 auto;padding:30px 20px 70px;}
+  .eyebrow{font-family:var(--fui);font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;}
+  .chip{display:inline-block;font-family:var(--fchip);font-size:var(--chipsize);letter-spacing:.08em;text-transform:uppercase;
+    background:var(--panel2);border:var(--bw) solid var(--line);color:var(--accent);padding:5px 9px;border-radius:var(--radius);}
+  header.hd{display:flex;gap:18px;align-items:center;justify-content:space-between;border-bottom:var(--bw) solid var(--line);padding-bottom:22px;}
+  h1{font-family:var(--fhead);font-weight:var(--hw);text-transform:var(--htt);font-size:28px;margin:10px 0 6px;line-height:1.2;}
+  h2{font-family:var(--fhead);font-weight:var(--hw);text-transform:var(--htt);font-size:19px;margin:34px 0 10px;display:flex;align-items:center;gap:9px;}
+  h2::before{content:"";width:9px;height:9px;background:var(--accent);display:inline-block;box-shadow:9px 0 0 var(--accent2);}
+  p{margin:11px 0;}
+  .lead{color:var(--muted);font-size:14px;margin-top:2px;}
+  .hero{width:110px;height:auto;flex:none;}
+  .card{background:var(--panel);border:var(--bw) solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--card-shadow);}
+  .obj{margin-top:20px;}
+  .obj ul{margin:8px 0 0;padding-left:18px;} .obj li{margin:5px 0;}
+  figure{margin:18px 0;text-align:center;}
+  figure img{max-width:100%;border:var(--bw) solid var(--line);border-radius:var(--radius);background:var(--panel2);padding:10px;box-shadow:var(--card-shadow);}
+  figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;font-family:var(--fui);}
+  .eras{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
+  .eras figure{margin:6px 0;}
+  .tools{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:14px;}
+  .tool{background:var(--panel);border:var(--bw) solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:var(--card-shadow);}
+  .tool .nm{font-family:var(--fhead);font-weight:var(--hw);font-size:15px;}
+  .tool p{font-size:12.8px;margin:7px 0 0;color:var(--muted);}
+  .badge{font-family:var(--fui);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:6px;
+    border:var(--bw) solid var(--accent);color:var(--accent);float:right;}
+  table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px;}
+  th,td{text-align:left;padding:10px 11px;border-bottom:var(--bw) solid var(--line);vertical-align:top;}
+  th{color:var(--muted);font-family:var(--fui);font-size:11px;letter-spacing:.06em;text-transform:uppercase;}
+  a{color:var(--accent2);}
+  footer{margin-top:38px;border-top:var(--bw) solid var(--line);padding-top:18px;color:var(--muted);font-size:13px;font-family:var(--fui);}
+  footer b{color:var(--ink);}
+  @media(max-width:540px){.tools{grid-template-columns:1fr} header.hd{flex-direction:column-reverse;align-items:flex-start}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="t">PIXEL ART MASTERCLASS · <span>Style Explorer</span></div>
+  <div class="tabs">
+    <button class="tab on" data-set="arcade">Arcade Dark</button>
+    <button class="tab" data-set="editorial">Editorial Studio</button>
+    <button class="tab" data-set="brutalist">Neo-Brutalist</button>
+    <button class="tab" data-set="minimal">Modern Minimal</button>
+  </div>
+</div>
+
+<div class="info"><div class="iwrap">
+  <h3 id="i-name">Arcade Dark</h3>
+  <div class="meta" id="i-meta"></div>
+  <div class="lf" id="i-lf"></div>
+</div></div>
+
+<div class="wrap">
+  <header class="hd">
+    <div>
+      <div class="eyebrow">Pixel Art for Games · Masterclass</div>
+      <h1>Orientation: The Mindset &amp; Your Toolkit</h1>
+      <div class="lead">A sample lesson, shown in the selected style. Switch themes above to compare.</div>
+      <div style="margin-top:13px"><span class="chip">Module 0</span> &nbsp;<span class="chip">~15 min</span></div>
+    </div>
+    <img class="hero" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAADYCAYAAABLNT5AAAADzklEQVR4nO3cIW5UURSA4Q4ZzRIGgXkgQUz3UI9nAzU1NSjMGAwbwHcnJWllM6amS+gGBj2QNCHc9n8zfN8CTk5e8v5cdRYnPGlarXf1Dhyu7cP1ot5hzl7VCwD/LwECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAGZ2V1rm9sFwvObi3oFDtj3j9/qFfbM7UKjFxCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJBZjho06pKhC4Qck9Ors3qFfZ9Ohvynoy4regEBGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAGZYRcReRk/77f1CjCMFxCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJBZTKv1bsSg85uLEWOGcTmQY3J3e1+vsOdxM+b/8gICMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyy3qB3x3rJcMf6y/1Cns+X3+tV3gWvvNh8QICMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIys7uIyNPevTkdMuf06mzInGPlO78MLyAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICCzmFbr3YhBLr/B87m7va9X2PO42Q6Z4wUEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRklvUC/J25XcZ7/+FtvcIe3+eweAEBGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAGZxbRa70YMen05jRgzuwtyc7uwB//icbMdMmf7cL0YMccLCMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyCxHXTabNidDLiveXY6YAhwCLyAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAz5BriSNNqPeSyIvCnURdQR/ECAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMr8A76ZOuK2dkJMAAAAASUVORK5CYII=" alt="slime">
+  </header>
+
+  <div class="card obj">
+    <div class="eyebrow">By the end of this lesson</div>
+    <ul>
+      <li>Understand why pixel art is an <b>art of constraints</b>.</li>
+      <li>Know what changed from the 8-bit to the 16-bit era.</li>
+      <li>Name the core tools, free and paid, and what each is best for.</li>
+    </ul>
+  </div>
+
+  <h2>1 · The art of constraints</h2>
+  <p>In most digital art a pixel is meaningless. In pixel art the opposite is true: <b>every pixel is a
+  decision you make on purpose</b>. You work small, with a limited palette, and let the viewer's eye
+  assemble the rest. That limitation isn't a weakness — it's the whole craft.</p>
+  <figure>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAADSCAYAAAB0MU2vAAADGUlEQVR4nO3dIU4lQRhG0Wry1OxkDCt4T5OMR41AsyI0YtR4EjSsAMNOsDVbGAFdufQ5G/iTTt+k3LfNOc8DSDqNMca2ba97H55znj8eHl/2vvvj/u6y6u6q77zq7vuv37t/559Pfy6r7q74zld7HwQ+j4AhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAI26wTQtdpjDGOthK46u7R1vrc/Xqe0BAmYAgTMIQJGMIEDGEChjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMKsE0LY0nXCI63IuevuV/CEhjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChjABQ5iAIUzAEGadEMKsE7rr7ifd/Xt9Y50Q+H8ChjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChjABQ5iAIcw6IYSdxhhj27bXvQ/POc9HW69zd5+7K1YCb9+eLys68oSGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQZp0QwpauE1pF/N53j7QSuOp/9oSGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQZp0Qwg65Tni0VUQrgd/3ric0hAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGsH/lqOW4soUaWgAAAABJRU5ErkJggg==" alt="heart on grid" style="max-width:230px">
+    <figcaption>Eight by seven pixels — each cell placed by hand, with intent.</figcaption>
+  </figure>
+
+  <h2>2 · Sixty seconds of history</h2>
+  <p>Early consoles showed few colors, so <b>8-bit</b> art looks flat and bold. The <b>16-bit</b> era
+  loosened the limits, letting artists add shading, highlights, and depth.</p>
+  <div class="eras">
+    <figure><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAADACAYAAACDO2h3AAACpUlEQVR4nO3dsU3EQBBAURtRAiEB4XVCgoTo4MqgBMq4Dk5IJHTikOBCeoAiJviy/F5ue7X62mi0XpedOz2e/uo1lLbbttZrmLirF8CxCZCUAEkJkJQASQmQlABJCZCUAEkJkJQASQmQlABJCZCUAEndT19Qz+Ndnh7Kz+fOS7v/03lEJyApAZISICkBkhIgKQGSEiApAZISICkBkhIgKQGSEiApAZISIKnxPODUdJ7v9HUdPb+9vI2en5qu/zJc//nnd/T8lBOQlABJCZCUAEkJkJQASQmQlABJCZCUAEkJkJQASQmQlABJCZDUOr3f7+j38x3ddJ7QCUhKgKQESEqApARISoCkBEhKgKQESEqApARISoCkBEhKgKQESCq/H3Dv9/vV9r5/TkBSAiQlQFICJCVAUgIkJUBSAiQlQFICJCVAUgIkJUBSAiQlQFL5PGA9j7Z3e98/JyApAZISICkBkhIgKQGSEiApAZISICkBkhIgKQGSEiApAZISIKl1+oLp/4anvj/fy8/nnl8/0u9vt23UkBOQlABJCZCUAEkJkJQASQmQlABJCZCUAEkJkJQASQmQlABJCZDU+H7A6TxYPU9Ym87zTfe/5gQkJUBSAiQlQFICJCVAUgIkJUBSAiQlQFICJCVAUgIkJUBSAiQlQFICJCVAUgIkJUBSAiQlQFICJCVAUgIkJUBSAiQlQFICJCVAUgIkJUBSAiQlQFICJCVAUgIkJUBSAiQlQFICJCVAUgIkJUBSAiQlQFICJDX+X/DR//dbm+5//b9hJyApAZISICkBkhIgKQGSEiApAZISICkBkhIgKQGSEiApAZISIKl0FmxZzBPW83g1JyApAZISICkBkhIgKQGSEiApAZISICkBkhIgKQGSEiApAZISIKl/eSc6H0xrx9MAAAAASUVORK5CYII=" alt="8-bit" style="width:140px"><figcaption><b>8-bit</b> — flat</figcaption></figure>
+    <figure><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAADACAYAAACDO2h3AAAC+0lEQVR4nO3dIW6UQRiA4V2CxyA5wBoMHgQJV+AGa2oQGBR3KKKmhiP0BJDgMG1SzG9qSHE1TQi23KHfJm/+7PP42Z3svhn1ZWa7Wbndi91DvYfScrts6z1MPKk3wHETICkBkhIgKQGSEiApAZISICkBkhIgKQGSEiApAZISICkBkno6/YB6Hu/bm1fl1+fe/tikv/90HtEJSEqApARISoCkBEhKgKQESEqApARISoCkBEhKgKQESEqApARIajwPODWd53t2fjZaf78/Ga2fuvv0cbT+7ObDaP3Jn7vR+iknICkBkhIgKQGSEiApAZISICkBkhIgKQGSEiApAZISICkBkhIgqe30fr9jv5+vttz8nq2//zda/+XvbL0TkJQASQmQlABJCZCUAEkJkJQASQmQlABJCZCUAEkJkJQASQmQVH4/4Nrv96s9Pz8drd/tZ/cLbswDsmYCJCVAUgIkJUBSAiQlQFICJCVAUgIkJUBSAiQlQFICJCVAUvk84HSeb3o/3tot7/f1FkacgKQESEqApARISoCkBEhKgKQESEqApARISoCkBEhKgKQESEqApLbTD5i+Nzx1ffV1tP7n94uD7OOxdi9n7y2/fvf5QDt5nOV2GTXkBCQlQFICJCVAUgIkJUBSAiQlQFICJCVAUgIkJUBSAiQlQFICJDW+H3A6D1bPE05N5/lq0/9vyglISoCkBEhKgKQESEqApARISoCkBEhKgKQESEqApARISoCkBEhKgKQESEqApARISoCkBEhKgKQESEqApARISoCkBEhKgKQESEqApARIanw/IDPLr8t6CyknICkBkhIgKQGSEiApAZISICkBkhIgKQGSEiApAZISICkBkhIgqfE84Nrf+52azvPN3xu+mH3/8P+bvjfsBCQlQFICJCVAUgIkJUBSAiQlQFICJCVAUgIkJUBSAiQlQFICJDWa5TqEo58nHM7TrZ0TkJQASQmQlABJCZCUAEkJkJQASQmQlABJCZCUAEkJkJQASQmQ1H8jA08JPU2gwQAAAABJRU5ErkJggg==" alt="16-bit" style="width:140px"><figcaption><b>16-bit</b> — shaded</figcaption></figure>
+  </div>
+
+  <h2>3 · Your toolkit</h2>
+  <div class="tools">
+    <div class="tool"><span class="badge">Paid</span><div class="nm">Aseprite</div>
+      <p>The professional standard. Animation timeline, tilemaps, scripting. Your main tool.</p></div>
+    <div class="tool"><span class="badge">Free</span><div class="nm">Pixelorama</div>
+      <p>Open-source all-rounder. Layers, onion-skin, tilemaps. Best free fallback.</p></div>
+  </div>
+
+  <h2>4 · Assignment rubric</h2>
+  <table>
+    <tr><th>Criterion</th><th>What we look for</th></tr>
+    <tr><td>Canvas &amp; constraint</td><td>Correct size; the shape reads clearly at that resolution.</td></tr>
+    <tr><td>Intentional pixels</td><td>Clean placement — no stray pixels; edges look deliberate.</td></tr>
+  </table>
+
+  <footer>Next up → <b>Module 1 · Fundamentals</b>: lines, jaggies, curves &amp; readable silhouettes.</footer>
+</div>
+
+<script>
+  var DATA={
+    arcade:{name:"Arcade Dark",meta:"<b>Retrofuturist.</b> Dark canvas, neon accents, pixel display font for chips. Fonts: Space Grotesk + Inter + Press Start 2P.",lf:"Long-form: good with care"},
+    editorial:{name:"Editorial Studio",meta:"<b>Premium &amp; calm</b> (Domestika/MasterClass feel). Warm paper, serif headlines, airy. Fonts: Fraunces + Inter.",lf:"Long-form: excellent"},
+    brutalist:{name:"Neo-Brutalist",meta:"<b>Bold &amp; loud.</b> Heavy black borders, hard shadows, blocky type — echoes pixel art's grid DNA. Fonts: Archivo + Inter.",lf:"Long-form: tiring in big doses"},
+    minimal:{name:"Modern Minimal",meta:"<b>Clean &amp; distraction-free</b> (Notion-like). Lots of whitespace, soft indigo accent. Fonts: Inter throughout.",lf:"Long-form: excellent"}
+  };
+  function set(k){
+    document.documentElement.setAttribute('data-theme',k);
+    document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('on',b.dataset.set===k);});
+    document.getElementById('i-name').textContent=DATA[k].name;
+    document.getElementById('i-meta').innerHTML=DATA[k].meta;
+    document.getElementById('i-lf').textContent=DATA[k].lf;
+  }
+  document.querySelectorAll('.tab').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.set);});});
+  set('arcade');
+</script>
+</body>
+</html>

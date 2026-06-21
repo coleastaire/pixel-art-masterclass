@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixel Art for Games — Masterclass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14121d;--panel:#1f1c2e;--panel2:#262238;--ink:#ece9f5;--ink-soft:#cfc9e2;--muted:#a7a0c2;--faint:#7b748f;
+    --line:#352f4d;--line-strong:#473f63;
+    --accent:#7cf0a0;--accent-soft:rgba(124,240,160,.10);--accent-line:rgba(124,240,160,.30);
+    --accent2:#ff5d73;--gold:#f2c14e;--gold-soft:rgba(242,193,78,.12);--danger:#ff5d73;
+    --disp:'Space Grotesk',sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'Space Mono',monospace;--px:'Press Start 2P',monospace;
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{background:var(--bg);color:var(--ink-soft);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none}
+  /* top progress hairline */
+  #topbar{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--accent);z-index:50;transition:width .5s ease;box-shadow:0 0 8px rgba(124,240,160,.5);}
+  .wrap{max-width:920px;margin:0 auto;padding:72px 7vw 90px;}
+  /* eyebrow */
+  .eyebrow{display:flex;align-items:center;gap:12px;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--faint);}
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--line-strong);}
+  /* hero */
+  .hero{display:flex;gap:24px;align-items:flex-start;justify-content:space-between;margin-top:22px;}
+  h1{font-family:var(--disp);font-weight:600;font-size:clamp(34px,6vw,60px);line-height:1.05;letter-spacing:-1.2px;margin:14px 0 0;color:var(--ink);}
+  h1 em{font-style:normal;color:var(--accent);}
+  .standfirst{font-family:var(--disp);font-weight:500;font-size:clamp(16px,2.4vw,21px);color:var(--muted);margin-top:14px;max-width:48ch;line-height:1.5;}
+  .mascot{width:88px;height:auto;flex:none;image-rendering:pixelated;filter:drop-shadow(0 6px 16px rgba(0,0,0,.4));}
+  /* dashboard */
+  .dash{display:flex;gap:30px;align-items:center;flex-wrap:wrap;margin:40px 0 8px;padding:22px 24px;background:var(--panel);border:1px solid var(--line);border-radius:14px;}
+  .pct{font-family:var(--disp);font-weight:600;font-size:54px;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .pct small{font-size:22px;color:var(--muted);margin-left:2px;}
+  .dstat{display:flex;flex-direction:column;gap:3px;}
+  .dstat .n{font-family:var(--disp);font-weight:600;font-size:22px;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .dstat .l{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);}
+  .pline{flex:1 1 160px;min-width:140px;}
+  .pline .track{height:3px;background:var(--line);border-radius:2px;overflow:hidden;}
+  .pline .fill{height:100%;width:0%;background:var(--accent);transition:width .5s ease;}
+  .pline .cap{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:8px;}
+  .btn{font-family:var(--sans);font-weight:600;font-size:14px;cursor:pointer;border-radius:8px;padding:11px 18px;border:1px solid transparent;transition:.2s;display:inline-flex;align-items:center;gap:8px;}
+  .btn-primary{background:var(--accent);color:#10331f;border-color:var(--accent);}
+  .btn-primary:hover{background:transparent;color:var(--accent);} .btn-primary .ar{transition:transform .2s} .btn-primary:hover .ar{transform:translateX(3px);}
+  .btn-primary[disabled]{opacity:.4;cursor:not-allowed;background:var(--panel2);color:var(--muted);border-color:var(--line);}
+  .btn-ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line-strong);}
+  .btn-ghost:hover{background:var(--ink-soft);color:var(--bg);}
+  /* phase */
+  .phase{margin-top:60px;}
+  .phase-hd{border-bottom:1.5px solid var(--line-strong);padding-bottom:14px;margin-bottom:6px;}
+  .phase-hd h2{font-family:var(--disp);font-weight:600;font-size:clamp(22px,3.4vw,30px);margin:6px 0 2px;color:var(--ink);}
+  .phase-hd .sub{font-family:var(--disp);font-style:italic;font-weight:500;color:var(--muted);font-size:15px;}
+  /* lesson rows */
+  .row{display:grid;grid-template-columns:54px 1fr auto;gap:18px;align-items:center;padding:20px 16px;border-bottom:1px solid var(--line);border-radius:10px;transition:background .2s;position:relative;}
+  .row:hover{background:var(--panel);}
+  .row .num{font-family:var(--disp);font-weight:600;font-size:30px;color:var(--faint);font-variant-numeric:tabular-nums;text-align:center;}
+  .row .title{font-family:var(--disp);font-weight:600;font-size:19px;color:var(--ink);line-height:1.2;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .row .desc{font-size:13.5px;color:var(--muted);margin-top:4px;max-width:60ch;}
+  .row .est{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:6px;}
+  .row .act{display:flex;align-items:center;gap:10px;}
+  /* checkbox */
+  .chk{width:26px;height:26px;border:1px solid var(--line-strong);border-radius:7px;background:var(--panel2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none;transition:.15s;}
+  .chk:hover{border-color:var(--accent);}
+  .chk svg{width:15px;height:15px;opacity:0;transform:scale(.6);transition:.15s;}
+  .chk[aria-checked="true"]{background:var(--accent);border-color:var(--accent);} .chk[aria-checked="true"] svg{opacity:1;transform:scale(1);}
+  .chk[aria-disabled="true"]{opacity:.35;cursor:not-allowed;}
+  /* states */
+  .row.next{background:var(--accent-soft);border-left:2px solid var(--accent);}
+  .row.done .title{color:var(--muted);} .row.done .title .ttext{text-decoration:line-through;text-decoration-color:var(--line-strong);}
+  .row.done .num{color:var(--line-strong);}
+  .row.locked{opacity:.5;} .row.soon{opacity:.62;}
+  /* badges */
+  .badge{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:5px;border:1px solid var(--line-strong);color:var(--faint);}
+  .badge.assign{color:var(--gold);border-color:var(--gold);background:var(--gold-soft);}
+  .badge.next{color:#10331f;background:var(--accent);border-color:var(--accent);}
+  .badge.done{color:var(--accent);border-color:var(--accent-line);background:var(--accent-soft);}
+  .badge.cap{color:var(--accent2);border-color:var(--accent2);}
+  .lock{font-family:var(--mono);font-size:11px;color:var(--faint);display:flex;align-items:center;gap:6px;}
+  .open-btn{font-family:var(--sans);font-weight:600;font-size:13px;cursor:pointer;border-radius:7px;padding:8px 15px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);transition:.18s;}
+  .open-btn:hover{background:var(--ink-soft);color:var(--bg);}
+  .open-btn.go{background:var(--accent);border-color:var(--accent);color:#10331f;} .open-btn.go:hover{background:transparent;color:var(--accent);}
+  /* footer */
+  footer{margin-top:64px;border-top:1px solid var(--line);padding-top:26px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+  .foot-note{font-family:var(--mono);font-size:12px;color:var(--faint);max-width:54ch;line-height:1.6;}
+  .reset{font-family:var(--sans);font-size:12px;color:var(--faint);background:none;border:none;cursor:pointer;}
+  .reset:hover{color:var(--danger);text-decoration:underline;}
+  /* toast */
+  #toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(140%);background:var(--ink);color:var(--bg);
+    padding:13px 20px;border-radius:9px;font-weight:600;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.5);transition:transform .4s cubic-bezier(.2,.9,.3,1.2);z-index:60;display:flex;gap:10px;align-items:center;}
+  #toast.show{transform:translateX(-50%) translateY(0);}
+  #toast .xp{font-family:var(--mono);color:#10331f;background:var(--accent);padding:2px 8px;border-radius:5px;font-size:12px;}
+  .fade{opacity:0;transform:translateY(8px);animation:rise .5s ease forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(max-width:600px){.row{grid-template-columns:40px 1fr;}.row .act{grid-column:1/-1;justify-content:flex-end;}.hero{flex-direction:column-reverse;align-items:flex-start}.mascot{width:64px}}
+</style>
+</head>
+<body>
+<div id="topbar"></div>
+<div class="wrap">
+
+  <div class="eyebrow">Self-paced · Interactive Masterclass</div>
+  <div class="hero">
+    <div>
+      <h1>Pixel Art for Games<br><em>Masterclass</em></h1>
+      <div class="standfirst">A classical art education — value, form, light, color, composition — practiced in the honest medium of pixels.</div>
+    </div>
+    <img class="mascot" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAADYCAYAAABLNT5AAAADzklEQVR4nO3cIW5UURSA4Q4ZzRIGgXkgQUz3UI9nAzU1NSjMGAwbwHcnJWllM6amS+gGBj2QNCHc9n8zfN8CTk5e8v5cdRYnPGlarXf1Dhyu7cP1ot5hzl7VCwD/LwECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAGZ2V1rm9sFwvObi3oFDtj3j9/qFfbM7UKjFxCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJBZjho06pKhC4Qck9Ors3qFfZ9Ohvynoy4regEBGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAGZYRcReRk/77f1CjCMFxCQESAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJBZTKv1bsSg85uLEWOGcTmQY3J3e1+vsOdxM+b/8gICMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyy3qB3x3rJcMf6y/1Cns+X3+tV3gWvvNh8QICMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIys7uIyNPevTkdMuf06mzInGPlO78MLyAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICCzmFbr3YhBLr/B87m7va9X2PO42Q6Z4wUEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRklvUC/J25XcZ7/+FtvcIe3+eweAEBGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAjQEBGgICMAAGZxbRa70YMen05jRgzuwtyc7uwB//icbMdMmf7cL0YMccLCMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMgIEZAQIyCxHXTabNidDLiveXY6YAhwCLyAgI0BARoCAjAABGQECMgIEZAQIyAgQkBEgICNAQEaAgIwAARkBAjICBGQECMgIEJARICAz5BriSNNqPeSyIvCnURdQR/ECAjICBGQECMgIEJARICAjQEBGgICMAAEZAQIyAgRkBAjICBCQESAgI0BARoCAjAABGQECMr8A76ZOuK2dkJMAAAAASUVORK5CYII=" alt="">
+  </div>
+
+  <div class="dash">
+    <div class="pct"><span id="pctNum">0</span><small>%</small></div>
+    <div class="dstat"><span class="n" id="doneNum">0/0</span><span class="l">Modules done</span></div>
+    <div class="dstat"><span class="n" id="xpNum">0</span><span class="l">XP earned</span></div>
+    <div class="pline">
+      <div class="track"><div class="fill" id="dashFill"></div></div>
+      <div class="cap" id="dashCap">Your journey begins at Module 0</div>
+    </div>
+    <button class="btn btn-primary" id="continueBtn">Continue <span class="ar">→</span></button>
+  </div>
+
+  <div id="phases"></div>
+
+  <footer>
+    <div class="foot-note">Progress is saved in this browser on your device. Lessons unlock as you complete the one before. Open a lesson, do the work, then mark it complete to advance.</div>
+    <button class="reset" id="resetBtn">Reset progress</button>
+  </footer>
+</div>
+
+<div id="toast"><span class="xp" id="toastXp">+100 XP</span><span id="toastMsg">Module complete</span></div>
+
+<script>
+/* ---------- CONTENT MODEL (edit here to add/reorder; UI renders from this) ---------- */
+var PHASES=[
+  {name:"Phase 1 · Foundations", sub:"Classical art skills, practiced in pixels", items:[
+    {id:"m0",code:"M0",title:"Orientation: The Mindset & Toolkit",desc:"The philosophy of constraints, a tour of the tools, and your first deliberate marks.",link:"modules/M0-orientation/lesson.html",assignment:true,est:"~22 min"},
+    {id:"m1",code:"M1",title:"Line, Shape & Silhouette",desc:"Shape before detail, the silhouette test, and drawing clean lines & curves.",link:"modules/M1-line-shape-silhouette/lesson.html",assignment:true,est:"~22 min"},
+    {id:"m2",code:"M2",title:"Form & Volume",desc:"Turning flat shapes into believable 3D form with the basic solids.",link:"modules/M2-form-volume/lesson.html",assignment:true,est:"~24 min"},
+    {id:"m3",code:"M3",title:"Value",desc:"Value structure, notan, and contrast — the single most important fundamental.",link:"modules/M3-value/lesson.html",assignment:true,est:"~25 min"},
+    {id:"m4",code:"M4",title:"Light & Shadow",desc:"Light logic: core shadow, cast shadow, occlusion, and bounce light.",link:null,est:"~25 min"},
+    {id:"m5",code:"M5",title:"Color",desc:"Hue, value & saturation, temperature, harmony, then building ramps & palettes.",link:null,est:"~28 min"},
+    {id:"m6",code:"M6",title:"Composition",desc:"Focal points, leading lines, balance, framing, and composing depth.",link:null,est:"~25 min"}
+  ]},
+  {name:"Phase 2 · Applied", sub:"Fundamentals in service of game art", items:[
+    {id:"m7",code:"M7",title:"Characters",desc:"Anatomy, gesture, proportion, and designing for appeal.",link:null,est:"~30 min"},
+    {id:"m8",code:"M8",title:"Environments & Tilesets",desc:"Tilesets, environment composition, perspective, and atmospheric depth.",link:null,est:"~30 min"},
+    {id:"m9",code:"M9",title:"Isometric & Perspective",desc:"Isometric projection, the 2:1 rule, and foreshortening.",link:null,est:"~28 min"},
+    {id:"m10",code:"M10",title:"Animation",desc:"Timing, weight, and the 12 principles applied to sprite motion.",link:null,est:"~30 min"},
+    {id:"m11",code:"M11",title:"Style, Resolution & Materials",desc:"Rendering materials, choosing resolution, and finding your own voice.",link:null,est:"~28 min"},
+    {id:"m12",code:"M12",title:"Game Integration",desc:"Sprite sheets, export, engine import, and an intro to shaders.",link:null,est:"~25 min"}
+  ]},
+  {name:"Capstone", sub:"Put it all together", items:[
+    {id:"cap",code:"★",title:"Capstone: Cohesive Mini Set",desc:"A unified character, animation set, tileset, and mockup scene — graded on the fundamentals.",link:null,capstone:true,est:"Project"}
+  ]}
+];
+
+/* ---------- STATE (versioned; gamification seams built in) ---------- */
+var KEY="pixelmc.progress.v1";
+var XP_PER=100;
+var state=load();
+function load(){
+  try{var s=JSON.parse(localStorage.getItem(KEY));}catch(e){s=null;}
+  if(!s||!s.version){s={version:1,completed:{},xp:0,streak:0,lastOpened:null};}
+  if(!s.completed)s.completed={};
+  return s;
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+
+/* flatten for sequential gating */
+function flat(){var a=[];PHASES.forEach(function(p){p.items.forEach(function(it){a.push(it);});});return a;}
+function isDone(id){return !!state.completed[id];}
+function unlockedIndex(){ // first incomplete index is the frontier
+  var f=flat(); for(var i=0;i<f.length;i++){ if(!isDone(f[i].id)) return i; } return f.length;
+}
+function stateOf(it,idx,frontier){
+  if(isDone(it.id))return "done";
+  if(idx>frontier)return "locked";
+  if(!it.link)return "soon";
+  return (idx===frontier)?"next":"open";
+}
+function firstActionable(){
+  var f=flat(),fr=unlockedIndex();
+  for(var i=0;i<f.length;i++){var st=stateOf(f[i],i,fr); if(st==="next"||st==="open")return f[i];}
+  return null;
+}
+
+/* ---------- RENDER ---------- */
+var CHECK='<svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#10331f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+function render(){
+  var f=flat(),fr=unlockedIndex();
+  var total=f.length, done=f.filter(function(i){return isDone(i.id);}).length;
+  var pct=Math.round(done/total*100);
+  document.getElementById("pctNum").textContent=pct;
+  document.getElementById("doneNum").textContent=done+"/"+total;
+  document.getElementById("xpNum").textContent=state.xp;
+  document.getElementById("dashFill").style.width=pct+"%";
+  document.getElementById("topbar").style.width=pct+"%";
+  var na=firstActionable();
+  document.getElementById("dashCap").textContent=na?("Up next — "+na.code+" · "+na.title):"All available modules complete ✨";
+  var cb=document.getElementById("continueBtn");
+  if(na){cb.disabled=false;cb.onclick=function(){openItem(na);};}else{cb.disabled=true;}
+
+  var idx=0, host=document.getElementById("phases"); host.innerHTML="";
+  PHASES.forEach(function(p){
+    var sec=document.createElement("div");sec.className="phase fade";
+    sec.innerHTML='<div class="phase-hd"><div class="eyebrow">'+p.name+'</div><div class="sub">'+p.sub+'</div></div>';
+    p.items.forEach(function(it){
+      var st=stateOf(it,idx,fr); idx++;
+      var row=document.createElement("div");row.className="row "+st;
+      // checkbox
+      var canCheck=(st==="open"||st==="next"||st==="done");
+      var chk='<div class="chk" role="checkbox" aria-checked="'+(st==="done")+'" '+(canCheck?'tabindex="0"':'aria-disabled="true"')+' data-id="'+it.id+'">'+CHECK+'</div>';
+      // badges
+      var b="";
+      if(st==="done")b+='<span class="badge done">Done</span>';
+      else if(st==="next")b+='<span class="badge next">Up next</span>';
+      if(it.capstone)b+='<span class="badge cap">Capstone</span>';
+      else if(it.assignment)b+='<span class="badge assign">Assignment</span>';
+      // action
+      var act="";
+      if(st==="locked")act='<span class="lock">🔒 Complete previous</span>';
+      else if(st==="soon")act='<span class="lock">Coming soon</span>';
+      else act='<button class="open-btn '+((st==="next")?"go":"")+'" data-open="'+it.id+'">'+(st==="done"?"Review":"Open")+'</button>';
+      row.innerHTML=chk+
+        '<div><div class="title"><span class="ttext">'+it.title+'</span>'+b+'</div>'+
+        '<div class="desc">'+it.desc+'</div><div class="est">'+it.code+' · '+it.est+'</div></div>'+
+        '<div class="act">'+act+'</div>';
+      // numeral instead of plain: put code as numeral
+      var num=document.createElement("div");num.className="num";num.textContent=it.capstone?"★":it.code.replace("M","");
+      row.insertBefore(num,row.firstChild.nextSibling); // after checkbox
+      sec.appendChild(row);
+    });
+    host.appendChild(sec);
+  });
+  bind();
+}
+function bind(){
+  document.querySelectorAll(".chk[role=checkbox]").forEach(function(c){
+    if(c.getAttribute("aria-disabled")==="true")return;
+    c.onclick=function(){toggle(c.dataset.id);};
+    c.onkeydown=function(e){if(e.key===" "||e.key==="Enter"){e.preventDefault();toggle(c.dataset.id);}};
+  });
+  document.querySelectorAll("[data-open]").forEach(function(b){
+    b.onclick=function(){var it=flat().filter(function(x){return x.id===b.dataset.open;})[0];openItem(it);};
+  });
+}
+function openItem(it){ if(!it||!it.link)return; state.lastOpened=it.id; save(); window.location.href=it.link; }
+function toggle(id){
+  var was=isDone(id);
+  if(was){delete state.completed[id]; state.xp=Math.max(0,state.xp-XP_PER);}
+  else{state.completed[id]=Date.now(); state.xp+=XP_PER; toast("+"+XP_PER+" XP","Module complete — next unlocked");}
+  save(); render();
+}
+function toast(xp,msg){
+  var t=document.getElementById("toast");
+  document.getElementById("toastXp").textContent=xp;
+  document.getElementById("toastMsg").textContent=msg;
+  t.classList.add("show"); clearTimeout(window._tt);
+  window._tt=setTimeout(function(){t.classList.remove("show");},2600);
+}
+document.getElementById("resetBtn").onclick=function(){
+  if(confirm("Reset all progress? This clears your saved completion and XP on this device. It does not touch any files.")){
+    state={version:1,completed:{},xp:0,streak:0,lastOpened:null};save();render();
+  }
+};
+render();
+</script>
+</body>
+</html>

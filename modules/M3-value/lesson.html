@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M3 · Value — Pixel Art for Games Masterclass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#14121d;--panel:#1f1c2e;--panel2:#262238;--ink:#ece9f5;--muted:#a7a0c2;--line:#352f4d;
+    --accent:#7cf0a0;--accent2:#ff5d73;--gold:#f2c14e;
+    --fhead:'Space Grotesk',sans-serif;--fbody:'Inter',sans-serif;--fui:'Space Mono',monospace;--fpx:'Press Start 2P',monospace;}
+  *{box-sizing:border-box} html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--fbody);line-height:1.68;}
+  img{image-rendering:pixelated;image-rendering:crisp-edges;}
+  .wrap{max-width:760px;margin:0 auto;padding:30px 20px 72px;}
+  .eyebrow{font-family:var(--fui);font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;}
+  .chip{display:inline-block;font-family:var(--fpx);font-size:9px;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--panel2);border:1px solid var(--line);color:var(--accent);padding:6px 9px;border-radius:7px;}
+  header.hd{display:flex;gap:18px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:22px;}
+  h1{font-family:var(--fhead);font-size:27px;margin:10px 0 6px;line-height:1.22;}
+  h2{font-family:var(--fhead);font-size:19px;margin:38px 0 10px;display:flex;align-items:center;gap:9px;}
+  h2::before{content:"";width:9px;height:9px;background:var(--accent);display:inline-block;box-shadow:9px 0 0 var(--accent2);}
+  h3{font-family:var(--fhead);font-size:15px;margin:22px 0 6px;color:var(--ink);}
+  p{margin:11px 0;color:#ded9ef;}
+  .lead{color:var(--muted);font-size:14px;margin-top:2px;}
+  .hero{width:104px;height:auto;flex:none;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;box-shadow:0 8px 24px rgba(0,0,0,.32);}
+  .obj{margin-top:20px;} .obj ul{margin:8px 0 0;padding-left:18px;} .obj li{margin:6px 0;}
+  figure{margin:18px 0;text-align:center;}
+  figure img{max-width:100%;border:1px solid var(--line);border-radius:8px;background:#e7e4f0;padding:10px;}
+  figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;font-family:var(--fui);}
+  .quad{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0;}
+  .quad figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:10px 6px;}
+  .quad img{width:78px;border:none;background:#e7e4f0;border-radius:6px;padding:6px;}
+  .quad figcaption{font-family:var(--fbody);font-size:11px;color:#ded9ef;margin-top:7px;}
+  .twin{display:grid;grid-template-columns:1fr 1fr;gap:14px;} .twin figure{margin:8px 0;} .twin img{width:100%;max-width:210px;}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0;}
+  .steps figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:10px 6px;}
+  .steps img{width:96px;border:none;background:#e7e4f0;border-radius:6px;padding:6px;}
+  .steps .sn{font-family:var(--fpx);font-size:8px;color:var(--accent);display:block;margin-bottom:6px;}
+  .steps figcaption{font-family:var(--fbody);font-size:11.5px;color:#ded9ef;margin-top:7px;line-height:1.45;}
+  .call{border-left:3px solid var(--accent);background:var(--panel2);border-radius:7px;padding:12px 15px;margin:16px 0;font-size:13.5px;color:#ded9ef;}
+  .call.mistake{border-left-color:var(--accent2);} .call.tip{border-left-color:var(--gold);}
+  .call b{color:var(--ink);}
+  .call .lbl{font-family:var(--fui);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:4px;}
+  .call.mistake .lbl{color:var(--accent2);} .call.tip .lbl{color:var(--gold);}
+  .reps{counter-reset:r;list-style:none;padding:0;margin:12px 0 0;}
+  .reps li{counter-increment:r;position:relative;padding:11px 0 11px 40px;border-bottom:1px solid var(--line);}
+  .reps li::before{content:counter(r);position:absolute;left:0;top:10px;width:25px;height:25px;background:var(--panel2);
+    border:1px solid var(--line);border-radius:6px;color:var(--accent);text-align:center;line-height:25px;font-weight:700;font-size:13px;font-family:var(--fui);}
+  .ck{font-family:var(--fui);font-size:11.5px;color:var(--accent);margin-top:5px;}
+  table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px;}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{color:var(--muted);font-family:var(--fui);font-weight:600;font-size:11px;letter-spacing:.07em;text-transform:uppercase;}
+  .recap{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;}
+  .recap ul{margin:8px 0 0;padding-left:18px;} .recap li{margin:5px 0;}
+  footer{margin-top:38px;border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center;}
+  .next{font-size:13px;color:var(--muted);font-family:var(--fui);} .next b{color:var(--ink);}
+  a{color:var(--accent);}
+  @media(max-width:560px){.twin,.steps{grid-template-columns:1fr}.quad{grid-template-columns:1fr 1fr}header.hd{flex-direction:column-reverse;align-items:flex-start}}
+</style>
+</head>
+<body><div class="wrap">
+
+  <header class="hd">
+    <div>
+      <div class="eyebrow">Pixel Art for Games · Masterclass · Phase 1: Foundations</div>
+      <h1>Value</h1>
+      <div class="lead">If you master only one fundamental, make it this one. Value is what makes an image read — long before color gets any credit.</div>
+      <div style="margin-top:13px"><span class="chip">Module 3</span> &nbsp;<span class="chip">~25 min</span> &nbsp;<span class="chip">Lesson 4</span></div>
+    </div>
+    <img class="hero" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANgAAACQCAYAAABqK6XsAAACKUlEQVR4nO3doU1DURiG4ZYJmIQhEAzDBCg0EzACGl2BQlegCTOwAWgMIeF/25uT5xmgOUnz5ldf7n63qMe3z69zv4G/u7263J/7DYWLcz8AViYwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgNLYitSBmJVMLaxcMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCe0tkVvL8dDz3E35wwSAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAIOQbzfzL1hbEUw4P177RDFsnMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAIDS2aJ6y6jJ61eXv1kwtkae4YBASGIQEBiGBQUhgEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBASGIQEBiGBQUhgENrU+nPSzd3LksvoVW1tiTzFBYOQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg9CSK9JJltG/W3WJPMUFg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKDkDXqiUwtoz+OrxM/s3s/3PvvT8AFg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKD0DcrJyuUbSJJTwAAAABJRU5ErkJggg==" alt="Shaded gem">
+  </header>
+
+  <div class="card obj">
+    <div class="eyebrow">By the end of this lesson you will</div>
+    <ul>
+      <li>Understand <b>value</b> — lightness and darkness, independent of color — and why it outranks every other fundamental.</li>
+      <li>Design with <b>notan</b>: strong, readable patterns built from just 2–3 big value shapes.</li>
+      <li>Use <b>contrast</b> to control where the viewer's eye goes (the focal point).</li>
+      <li>Work <b>value-first</b>: plan in grayscale, then lay color over the structure.</li>
+      <li>Complete a graded value-first illustration.</li>
+    </ul>
+  </div>
+
+  <h2>1 · Value is king</h2>
+  <p>Value is the lightness or darkness of an area, regardless of its color. It is the single most important
+  fundamental in all of visual art, because <b>almost everything that makes an image read — form, depth, mood,
+  focus — is carried by value, not hue</b>. There's an old studio saying: <i>"Value does the work, color gets
+  the credit."</i> A piece with strong values and dull color still reads; a piece with gorgeous color and weak
+  values turns to mush.</p>
+  <p>Train your eye on the value scale below — a ramp from black to white. Learning to judge where a color sits
+  on this scale (try <b>squinting</b>, which blurs away detail and color and leaves only value) is a skill you'll
+  use every single time you pick a pixel.</p>
+  <figure><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALYAAAA0CAYAAAAniMLXAAAAx0lEQVR4nO3SwQnDQBAEQdlhCGPEIQ7ln6CdxT6aqgSGgX6d5/d3DLjvZ2Lm2Htm53mm/uyRnbXWyM51fUZ23iMrMEzYJAmbJGGTJGyShE2SsEkSNknCJknYJAmbJGGTJGyShE2SsEkSNknCJknYJAmbJGGTJGyShE2SsEkSNknCJknYJAmbJGGTJGyShE2SsEkSNknCJknYJAmbJGGTJGyShE2SsEkSNknCJknYJAmbJGGTJGyShE2SsEkSNknCJknYJAmbpD+ceQRJwpH+BQAAAABJRU5ErkJggg==" alt="value scale" style="max-width:100%"><figcaption>The value scale — every color you choose lands somewhere on this dark-to-light range.</figcaption></figure>
+  <div class="call tip"><span class="lbl">Master study</span>Take three pieces of art or game screenshots you
+  love and <b>desaturate them to grayscale</b>. You'll see the magic: the value structure alone carries the
+  image, and most strong pieces resolve into just a few big value shapes.</div>
+
+  <h2>2 · Notan — design in big value shapes</h2>
+  <p><b>Notan</b> is the Japanese idea of arranging light and dark masses. Before any detail or color, a strong
+  image already works as a simple pattern of 2–3 values. The test is brutal and simple: <b>if your big shapes
+  don't separate clearly by value, the image won't read</b> — no matter how much detail you add later.</p>
+  <div class="twin">
+    <figure><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAACWCAYAAADg+AXVAAACJElEQVR4nO3dsa3CQBQF0e8vSkGUQUiNBFSGKMMRCZQA2IhlxDm5pU1GL7ryNM/X2x+Q9D/6AcByAoYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBC2Gf0AHtvttou/PZ8vb3wJ38YFhjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCETfN8vY1+xC9YMwkcxRTx+7nAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwc8IXFCeBo5giPu94PC3+1gWGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMISZE35IcYo4ahK4Zl73a1xgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUPYsDmhyRis5wJDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMI2Zn3Q5QJDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMKm/f4w5O+EwHouMIQJGMIEDGEChjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChjABQ9gdt4opgYA/g9UAAAAASUVORK5CYII=" alt="strong notan"><figcaption class="tag-good">Strong — light sky, mid hill, dark tree &amp; foreground separate instantly.</figcaption></figure>
+    <figure><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAACWCAYAAADg+AXVAAAB60lEQVR4nO3bsQ2AMBAEQUD0XwwxlbgZ6AECs2Imt+Rk9dGtx3FeC5C0zf4A8JyAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQts/+APzdGOPxWxcYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBBmTsjnvJnX/Y0LDGEChjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAImzYnNBmD91xgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUPYbtYHXS4whAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChrAbAJ8Oi+JCtzcAAAAASUVORK5CYII=" alt="muddy notan"><figcaption class="tag-bad">Muddy — identical shapes, but the values are too close to read.</figcaption></figure>
+  </div>
+  <p>Same composition, same shapes — the only difference is value separation. This is why pros thumbnail in
+  three values <i>first</i>: get the notan right and the rest of the painting is just elaboration.</p>
+
+  <h2>3 · Contrast directs the eye</h2>
+  <p>Here's the lever notan hands you: <b>the eye is drawn to the area of greatest value contrast.</b> Where your
+  lightest light meets your darkest dark, attention goes — automatically. That makes contrast your tool for
+  building a <b>focal point</b>.</p>
+  <figure><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAACiCAYAAACwGCOEAAACUklEQVR4nO3WwWkEMRQFQY/ZSBSJTxv0nhyEzkplnYGhQWZmTFUAj48OjY451/sDIPg8+wDgfoQDyIQDyIQDyIQDyIQDyIQDyIQDyIQDyIQDyIQDyIQDyIQDyIQDyIQDyIQDyIQDyB67htZau6YuZYyxZcf7/M773IsfB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5AJB5Adc6732UfAf7XWOvuEP+HHAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWTCAWSPXUPP59euqUt5vb637Ky1tuxczRhjy473uRc/DiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiATDiA75lzvs48A7sWPA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8iEA8h+AKzSIG82A9H9AAAAAElFTkSuQmCC" alt="contrast focal point" style="max-width:340px"><figcaption>Every shape is low-contrast except one. Your eye went straight to the dark square — that's contrast at work.</figcaption></figure>
+  <div class="call"><span class="lbl">Why it works</span>Spend your strongest contrast on what matters most —
+  a character's face, the key item. If <i>everything</i> is high-contrast, nothing stands out and the eye has
+  nowhere to rest.</div>
+
+  <h2>4 · Worked example: value before color</h2>
+  <p>The professional order of operations: nail the values in grayscale, <i>then</i> add color on top. Color
+  almost always rides on a value structure that was decided first.</p>
+  <div class="steps">
+    <figure><span class="sn">Step 1</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANgAAACQCAYAAABqK6XsAAAB+UlEQVR4nO3du20DQRAFQR5Dk8GYFIJiosHUxAQEQYCm77OoimCdxlgPu90W9fh8fR/9Bv7u+fWxHf2Gwv3oB8DKBAYhgUFIYBASGIQEBiGBQUhgEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBASGITGVqQWxKxkamHtgkFIYBASGIQEBiGBQUhgEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBASGIQEBiGBQWizRIaOCwYhgUFIYBASGIQEBiGBQUhgEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBASGIQEBiF/NMMP/NEMFyAwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgNLZonmIZzX9MLZGnuGAQEhiEBAYhgUFIYBASGIQEBiGBQUhgEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBA61fpzkmX0tZxtiTzFBYOQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg9CSK9JJltG/W3WJPMUFg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKDkDXqTs62jLZE3ocLBiGBQUhgEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBASGIQEBiGBQUhgEBIYhAQGoTcl/x+UOyUqfgAAAABJRU5ErkJggg==" alt="flat"><figcaption><b>Flat color.</b> A single value — pretty, but it has no structure to read.</figcaption></figure>
+    <figure><span class="sn">Step 2</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANgAAACQCAYAAABqK6XsAAACIElEQVR4nO3dMU5CURRFUbCwYqTWDIPaUDgIQ2nJmKhstLYxJt4NPy9rDYC8hOzc6uTvd4u63T6/Hv0G/u5weN4/+g2Fp0c/AFYmMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAIDS2IrUgZiVTC2sXDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQntLZFZyPr89+gk/uGAQEhiEBAYhgUFIYBASGIQEBiGBQUhgEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBDyjWb+ZWsL4inH44tvNMPWCQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAiNLZqnrLqMXnX5uzVTS+QpLhiEBAYhgUFIYBASGIQEBiGBQUhgEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBASGIQ2tf6cdDq9LrmMXtXWlshTXDAICQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgtuSKdZBn9u1WXyFNcMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAICQwCFmj3snUMvpyeZ/4md31+uG/vwMXDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQt9dzCvGSpUzuwAAAABJRU5ErkJggg==" alt="value plan"><figcaption><b>Value plan.</b> Resolve it in 3 grays first: light table, mid body, dark base.</figcaption></figure>
+    <figure><span class="sn">Step 3</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANgAAACQCAYAAABqK6XsAAACKUlEQVR4nO3doU1DURiG4ZYJmIQhEAzDBCg0EzACGl2BQlegCTOwAWgMIeF/25uT5xmgOUnz5ldf7n63qMe3z69zv4G/u7263J/7DYWLcz8AViYwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgNLYitSBmJVMLaxcMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCe0tkVvL8dDz3E35wwSAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAIOQbzfzL1hbEUw4P177RDFsnMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAIDS2aJ6y6jJ61eXv1kwtkae4YBASGIQEBiGBQUhgEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBASGIQEBiGBQUhgENrU+nPSzd3LksvoVW1tiTzFBYOQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg9CSK9JJltG/W3WJPMUFg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKDkDXqiUwtoz+OrxM/s3s/3PvvT8AFg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKD0DcrJyuUbSJJTwAAAABJRU5ErkJggg==" alt="colored"><figcaption><b>Color on top.</b> Map hues onto each value. The structure was already there.</figcaption></figure>
+  </div>
+  <div class="call mistake"><span class="lbl">Common mistakes</span>(1) <b>Values too close</b> — the number-one
+  beginner issue; everything sits in the mid-range and the image goes muddy. (2) <b>Asking color to do value's
+  job</b> — a vivid hue at the wrong value still won't read. (3) <b>Contrast everywhere</b> — scatter your darks
+  and lights evenly and you destroy the focal point.</div>
+
+  <h2>5 · Guided practice</h2>
+  <ol class="reps">
+    <li>Paint a <b>5-step value scale</b> by hand in Aseprite (even jumps from near-black to near-white). Then do a tiny <b>3-value notan</b> thumbnail of any scene.
+      <div class="ck">✓ Checkpoint: even value steps; the notan reads as a scene in just 3 values.</div></li>
+    <li>Take an existing sprite, <b>desaturate it</b> (or eyedrop its values), and check whether the big shapes still separate.
+      <div class="ck">✓ Checkpoint: you can tell whether your sprite's values are doing the work — or hiding behind color.</div></li>
+  </ol>
+
+  <h3>Graded assignment</h3>
+  <p>Make a small illustration or sprite scene <b>designed value-first</b>. Submit <b>two images</b>: (a) a
+  <b>3-value grayscale notan</b> plan, and (b) the <b>final colored version</b> that preserves that value
+  structure, with a clear focal point created by contrast. A 32–48px canvas is ideal. Export both as PNGs scaled
+  ×8 to your submissions folder.</p>
+  <table>
+    <tr><th>Criterion</th><th>What we look for</th></tr>
+    <tr><td>Value separation</td><td>Big shapes read clearly apart in grayscale; no muddy mid-tone soup.</td></tr>
+    <tr><td>Notan plan</td><td>A genuine 3-value plan exists and the final follows it.</td></tr>
+    <tr><td>Focal point</td><td>The strongest contrast lands on the most important spot.</td></tr>
+    <tr><td>Color rides value</td><td>Colors sit at the right values; desaturating the final still reads.</td></tr>
+    <tr><td>Export</td><td>Both images delivered, upscaled, clearly named, in the submissions folder.</td></tr>
+  </table>
+
+  <h2>Recap</h2>
+  <div class="recap">
+    <ul>
+      <li><b>Value outranks color</b> — it carries form, depth, mood, and readability.</li>
+      <li>Design the <b>notan</b> first: 2–3 big value shapes that separate clearly.</li>
+      <li><b>Contrast directs the eye</b> — spend your strongest contrast on the focal point.</li>
+      <li>Work <b>value-first</b>: grayscale plan, then color on top.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <div class="next">Next up → <b>Module 4 · Light &amp; Shadow</b>: the logic of how light actually behaves.</div>
+    <span class="chip">End of M3</span>
+  </footer>
+
+  <div class="call mistake" style="margin-top:26px">
+    <span class="lbl">Superintendent's note (for Cole)</span>M3 treats value as its own discipline (notan,
+    contrast, value-first workflow) — the load-bearing fundamental. M4 builds on it with light logic. Flag
+    anything on depth, the grayscale-first emphasis, or assignment difficulty.
+  </div>
+
+</div></body>
+</html>
