@@ -47,6 +47,14 @@
   .btn-primary[disabled]{opacity:.4;cursor:not-allowed;background:var(--panel2);color:var(--muted);border-color:var(--line);}
   .btn-ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line-strong);}
   .btn-ghost:hover{background:var(--ink-soft);color:var(--bg);}
+  /* progress-file tools (under the dashboard) */
+  .ptools{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 2px 0;}
+  .ptools-label{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);}
+  .pbtn{font-family:var(--sans);font-weight:600;font-size:13px;cursor:pointer;border-radius:8px;padding:8px 14px;background:var(--panel);border:1px solid var(--line-strong);color:var(--ink-soft);transition:.18s;}
+  .pbtn:hover{border-color:var(--accent);color:var(--ink);}
+  .pbtn:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .ptools-hint{font-family:var(--mono);font-size:11px;color:var(--faint);flex:1 1 200px;min-width:160px;}
+  .ptools code,.foot-note code{font-family:var(--mono);color:var(--ink-soft);}
   /* phase */
   .phase{margin-top:60px;}
   .phase-hd{border-bottom:1.5px solid var(--line-strong);padding-bottom:14px;margin-bottom:6px;}
@@ -104,7 +112,7 @@
   .chk:focus-visible,.open-btn:focus-visible,.btn:focus-visible,.reset:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
   .lock svg{width:13px;height:13px;flex:none;}
   @media(max-width:600px){
-    .open-btn,.btn{min-height:44px;}
+    .open-btn,.btn,.pbtn{min-height:44px;}
     .reset{min-height:44px;display:inline-flex;align-items:center;}
     .lock{min-height:44px;}
   }
@@ -138,16 +146,19 @@
     <button class="btn btn-primary" id="continueBtn">Continue <span class="ar">→</span></button>
   </div>
 
+  <div class="ptools">
+    <span class="ptools-label">Progress file</span>
+    <button class="pbtn" id="exportBtn">Save</button>
+    <button class="pbtn" id="importBtn">Load</button>
+    <input type="file" id="importFile" accept="application/json,.json" hidden aria-label="Load progress file">
+    <span class="ptools-hint" id="ptHint">Writes <code>progress.json</code> to this folder — keep it on your own branch to save your progress.</span>
+  </div>
+
   <div id="phases"></div>
 
   <footer>
-    <div class="foot-note">Progress is saved in this browser on your device — never written into the lesson files. <b>Save progress file</b> exports a <code>progress.json</code> you can keep in the repo (e.g. commit it on your own branch); <b>Load progress file</b> restores it on any device.</div>
-    <div class="fbtns">
-      <button class="lnk" id="exportBtn">Save progress file</button>
-      <button class="lnk" id="importBtn">Load progress file</button>
-      <button class="reset" id="resetBtn">Reset progress</button>
-      <input type="file" id="importFile" accept="application/json,.json" hidden aria-label="Load progress file">
-    </div>
+    <div class="foot-note">Progress is saved in your browser and, when you use <b>Save</b> above, written to <code>progress.json</code> in this folder — never into the lesson files. Lessons unlock as you complete the one before.</div>
+    <button class="reset" id="resetBtn">Reset progress</button>
   </footer>
 </div>
 
@@ -189,6 +200,9 @@ function load(){
   return s;
 }
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+var SERVER=(location.protocol==="http:"||location.protocol==="https:");
+/* persist = cache to localStorage AND, when launched via the local server, write progress.json in this folder */
+function persist(){ save(); if(SERVER){ try{ fetch("save",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(state)}); }catch(e){} } }
 
 /* flatten for sequential gating */
 function flat(){var a=[];PHASES.forEach(function(p){p.items.forEach(function(it){a.push(it);});});return a;}
@@ -274,7 +288,7 @@ function toggle(id){
   var was=isDone(id);
   if(was){delete state.completed[id]; state.xp=Math.max(0,state.xp-XP_PER);}
   else{state.completed[id]=Date.now(); state.xp+=XP_PER; toast("+"+XP_PER+" XP","Module complete — next unlocked");}
-  save(); render();
+  persist(); render();
 }
 function toast(xp,msg){
   var t=document.getElementById("toast");
@@ -285,31 +299,71 @@ function toast(xp,msg){
 }
 document.getElementById("resetBtn").onclick=function(){
   if(confirm("Reset all progress? This clears your saved completion and XP on this device. It does not touch any files.")){
-    state={version:1,completed:{},xp:0,streak:0,lastOpened:null};save();render();
+    state={version:1,completed:{},xp:0,streak:0,lastOpened:null};persist();render();
   }
 };
-document.getElementById("exportBtn").onclick=function(){
-  var blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
-  var url=URL.createObjectURL(blob);
-  var a=document.createElement("a");a.href=url;a.download="progress.json";document.body.appendChild(a);a.click();a.remove();
-  URL.revokeObjectURL(url); toast("Saved","Downloaded progress.json");
-};
-document.getElementById("importBtn").onclick=function(){document.getElementById("importFile").click();};
+/* Progress file: write directly into the project folder via the File System Access
+   API (Chromium). Remembers the file after the first pick, then overwrites silently.
+   Falls back to a Downloads download / file-picker where the API isn't available. */
+function idbOpen(){return new Promise(function(res){try{var rq=indexedDB.open("pixelmc",1);rq.onupgradeneeded=function(){rq.result.createObjectStore("kv");};rq.onsuccess=function(){res(rq.result);};rq.onerror=function(){res(null);};}catch(e){res(null);}});}
+function idbGet(k){return idbOpen().then(function(db){if(!db)return null;return new Promise(function(res){var r=db.transaction("kv","readonly").objectStore("kv").get(k);r.onsuccess=function(){res(r.result||null);};r.onerror=function(){res(null);};});});}
+function idbSet(k,v){return idbOpen().then(function(db){if(!db)return;return new Promise(function(res){var r=db.transaction("kv","readwrite").objectStore("kv").put(v,k);r.onsuccess=function(){res();};r.onerror=function(){res();};});});}
+function ensurePerm(h,mode){var o={mode:mode};return Promise.resolve(h.queryPermission(o)).then(function(p){if(p==="granted")return true;return Promise.resolve(h.requestPermission(o)).then(function(q){return q==="granted";});}).catch(function(){return false;});}
+function applyProgressText(txt){try{var s=JSON.parse(txt);if(!s||typeof s!=="object"||typeof s.completed!=="object")throw 0;state={version:s.version||1,completed:s.completed||{},xp:s.xp||0,streak:s.streak||0,lastOpened:s.lastOpened||null};save();render();toast("Loaded","Progress restored");}catch(e){alert("That doesn't look like a valid progress.json file.");}}
+function downloadFallback(data){var blob=new Blob([data],{type:"application/json"});var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download="progress.json";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);toast("Saved","Downloaded to your Downloads folder");}
+async function saveProgress(){
+  var data=JSON.stringify(state,null,2);
+  if(window.showSaveFilePicker){
+    try{
+      var h=await idbGet("ph");
+      if(h && !(await ensurePerm(h,"readwrite"))) h=null;
+      if(!h){ h=await window.showSaveFilePicker({suggestedName:"progress.json",types:[{description:"Progress file",accept:{"application/json":[".json"]}}]}); await idbSet("ph",h); }
+      var w=await h.createWritable(); await w.write(data); await w.close();
+      toast("Saved","progress.json written to your folder"); return;
+    }catch(e){ if(e&&e.name==="AbortError")return; }
+  }
+  downloadFallback(data);
+}
+async function loadProgress(){
+  if(window.showOpenFilePicker){
+    try{
+      var h=await idbGet("ph"); var file;
+      if(h && await ensurePerm(h,"read")){ file=await h.getFile(); }
+      else { var picked=await window.showOpenFilePicker({types:[{description:"Progress file",accept:{"application/json":[".json"]}}]}); h=picked[0]; await idbSet("ph",h); file=await h.getFile(); }
+      applyProgressText(await file.text()); return;
+    }catch(e){ if(e&&e.name==="AbortError")return; }
+  }
+  document.getElementById("importFile").click();
+}
+document.getElementById("exportBtn").onclick=saveProgress;
+document.getElementById("importBtn").onclick=loadProgress;
 document.getElementById("importFile").onchange=function(e){
   var file=e.target.files[0]; if(!file){return;}
-  var r=new FileReader();
-  r.onload=function(){
-    try{
-      var s=JSON.parse(r.result);
-      if(!s||typeof s!=="object"||typeof s.completed!=="object"){throw new Error("bad");}
-      state={version:s.version||1,completed:s.completed||{},xp:s.xp||0,streak:s.streak||0,lastOpened:s.lastOpened||null};
-      save(); render(); toast("Loaded","Progress restored");
-    }catch(err){ alert("That doesn't look like a valid progress.json file."); }
-    e.target.value="";
-  };
-  r.readAsText(file);
+  var r=new FileReader(); r.onload=function(){applyProgressText(r.result); e.target.value="";}; r.readAsText(file);
 };
-render();
+(function initProgressUI(){
+  var hint=document.getElementById("ptHint"), lbl=document.querySelector(".ptools-label");
+  var ex=document.getElementById("exportBtn"), im=document.getElementById("importBtn");
+  if(SERVER){
+    if(hint) hint.innerHTML='&#10003; Your progress saves automatically to <code>progress.json</code> in this folder.';
+    if(lbl) lbl.textContent="Auto-save";
+    if(ex) ex.style.display="none";
+    if(im) im.style.display="none";
+  } else if(hint){
+    hint.innerHTML='To save into this folder automatically, start the course with <code>Launch&nbsp;Masterclass.command</code>. Opened straight from a file, the buttons can only Save to your Downloads folder.';
+  }
+})();
+/* boot: in server mode, the root progress.json is the source of truth */
+function boot(){
+  if(SERVER){
+    fetch("progress.json?ts="+Date.now(),{cache:"no-store"})
+      .then(function(r){return r.ok?r.json():null;})
+      .then(function(j){ if(j&&typeof j==="object"&&typeof j.completed==="object"){ state={version:j.version||1,completed:j.completed||{},xp:j.xp||0,streak:j.streak||0,lastOpened:j.lastOpened||null}; save(); } })
+      .catch(function(){})
+      .then(function(){ render(); });
+  } else { render(); }
+}
+boot();
 </script>
 </body>
 </html>
