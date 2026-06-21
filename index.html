@@ -86,6 +86,10 @@
   .foot-note{font-family:var(--mono);font-size:12px;color:var(--faint);max-width:54ch;line-height:1.6;}
   .reset{font-family:var(--sans);font-size:12px;color:var(--faint);background:none;border:none;cursor:pointer;}
   .reset:hover{color:var(--danger);text-decoration:underline;}
+  .fbtns{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+  .lnk{font-family:var(--sans);font-size:12px;color:var(--accent);background:none;border:none;cursor:pointer;padding:0;}
+  .lnk:hover{text-decoration:underline;}
+  .lnk:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
   /* toast */
   #toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(140%);background:var(--ink);color:var(--bg);
     padding:13px 20px;border-radius:9px;font-weight:600;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.5);transition:transform .4s cubic-bezier(.2,.9,.3,1.2);z-index:60;display:flex;gap:10px;align-items:center;}
@@ -94,6 +98,20 @@
   .fade{opacity:0;transform:translateY(8px);animation:rise .5s ease forwards;}
   @keyframes rise{to{opacity:1;transform:none}}
   @media(max-width:600px){.row{grid-template-columns:40px 1fr;}.row .act{grid-column:1/-1;justify-content:flex-end;}.hero{flex-direction:column-reverse;align-items:flex-start}.mascot{width:64px}}
+  /* ── accessibility: visible focus, larger hit targets, reduced motion ── */
+  .chk{position:relative;}
+  .chk::after{content:"";position:absolute;inset:-9px;border-radius:12px;}            /* expands tap area to ~44px without changing the visible box */
+  .chk:focus-visible,.open-btn:focus-visible,.btn:focus-visible,.reset:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .lock svg{width:13px;height:13px;flex:none;}
+  @media(max-width:600px){
+    .open-btn,.btn{min-height:44px;}
+    .reset{min-height:44px;display:inline-flex;align-items:center;}
+    .lock{min-height:44px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition-duration:.001ms!important;animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;}
+    .fade{opacity:1!important;transform:none!important;animation:none!important;}
+  }
 </style>
 </head>
 <body>
@@ -123,8 +141,13 @@
   <div id="phases"></div>
 
   <footer>
-    <div class="foot-note">Progress is saved in this browser on your device. Lessons unlock as you complete the one before. Open a lesson, do the work, then mark it complete to advance.</div>
-    <button class="reset" id="resetBtn">Reset progress</button>
+    <div class="foot-note">Progress is saved in this browser on your device — never written into the lesson files. <b>Save progress file</b> exports a <code>progress.json</code> you can keep in the repo (e.g. commit it on your own branch); <b>Load progress file</b> restores it on any device.</div>
+    <div class="fbtns">
+      <button class="lnk" id="exportBtn">Save progress file</button>
+      <button class="lnk" id="importBtn">Load progress file</button>
+      <button class="reset" id="resetBtn">Reset progress</button>
+      <input type="file" id="importFile" accept="application/json,.json" hidden aria-label="Load progress file">
+    </div>
   </footer>
 </div>
 
@@ -187,6 +210,7 @@ function firstActionable(){
 
 /* ---------- RENDER ---------- */
 var CHECK='<svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#10331f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+var LOCK='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>';
 function render(){
   var f=flat(),fr=unlockedIndex();
   var total=f.length, done=f.filter(function(i){return isDone(i.id);}).length;
@@ -197,7 +221,7 @@ function render(){
   document.getElementById("dashFill").style.width=pct+"%";
   document.getElementById("topbar").style.width=pct+"%";
   var na=firstActionable();
-  document.getElementById("dashCap").textContent=na?("Up next — "+na.code+" · "+na.title):"All available modules complete ✨";
+  document.getElementById("dashCap").textContent=na?("Up next — "+na.code+" · "+na.title):"All available modules complete";
   var cb=document.getElementById("continueBtn");
   if(na){cb.disabled=false;cb.onclick=function(){openItem(na);};}else{cb.disabled=true;}
 
@@ -219,7 +243,7 @@ function render(){
       else if(it.assignment)b+='<span class="badge assign">Assignment</span>';
       // action
       var act="";
-      if(st==="locked")act='<span class="lock">🔒 Complete previous</span>';
+      if(st==="locked")act='<span class="lock">'+LOCK+' Complete previous</span>';
       else if(st==="soon")act='<span class="lock">Coming soon</span>';
       else act='<button class="open-btn '+((st==="next")?"go":"")+'" data-open="'+it.id+'">'+(st==="done"?"Review":"Open")+'</button>';
       row.innerHTML=chk+
@@ -263,6 +287,27 @@ document.getElementById("resetBtn").onclick=function(){
   if(confirm("Reset all progress? This clears your saved completion and XP on this device. It does not touch any files.")){
     state={version:1,completed:{},xp:0,streak:0,lastOpened:null};save();render();
   }
+};
+document.getElementById("exportBtn").onclick=function(){
+  var blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement("a");a.href=url;a.download="progress.json";document.body.appendChild(a);a.click();a.remove();
+  URL.revokeObjectURL(url); toast("Saved","Downloaded progress.json");
+};
+document.getElementById("importBtn").onclick=function(){document.getElementById("importFile").click();};
+document.getElementById("importFile").onchange=function(e){
+  var file=e.target.files[0]; if(!file){return;}
+  var r=new FileReader();
+  r.onload=function(){
+    try{
+      var s=JSON.parse(r.result);
+      if(!s||typeof s!=="object"||typeof s.completed!=="object"){throw new Error("bad");}
+      state={version:s.version||1,completed:s.completed||{},xp:s.xp||0,streak:s.streak||0,lastOpened:s.lastOpened||null};
+      save(); render(); toast("Loaded","Progress restored");
+    }catch(err){ alert("That doesn't look like a valid progress.json file."); }
+    e.target.value="";
+  };
+  r.readAsText(file);
 };
 render();
 </script>
