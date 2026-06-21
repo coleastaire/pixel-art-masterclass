@@ -3,189 +3,229 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>M1 · Line, Shape &amp; Silhouette — Pixel Art for Games Masterclass</title>
+<title>M1 · Line, Shape &amp; Silhouette — Pixel Art Masterclass</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#14121d;--panel:#1f1c2e;--panel2:#262238;--ink:#ece9f5;--muted:#a7a0c2;--line:#352f4d;
-    --accent:#7cf0a0;--accent2:#ff5d73;--gold:#f2c14e;
-    --fhead:'Space Grotesk',sans-serif;--fbody:'Inter',sans-serif;--fui:'Space Mono',monospace;--fpx:'Press Start 2P',monospace;
-  }
-  *{box-sizing:border-box} html,body{margin:0}
-  body{background:var(--bg);color:var(--ink);font-family:var(--fbody);line-height:1.68;}
+  :root{--bg:#14121d;--panel:#1f1c2e;--panel2:#262238;--ink:#ece9f5;--ink-soft:#cfc9e2;--muted:#a7a0c2;--faint:#7b748f;
+    --line:#352f4d;--line-strong:#473f63;--accent:#7cf0a0;--accent2:#ff5d73;--gold:#f2c14e;
+    --disp:'Space Grotesk',sans-serif;--sans:'Inter',system-ui,sans-serif;--mono:'Space Mono',monospace;--px:'Press Start 2P',monospace;}
+  *{box-sizing:border-box} html,body{height:100%;margin:0}
+  body{background:var(--bg);color:var(--ink-soft);font-family:var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased;}
   img{image-rendering:pixelated;image-rendering:crisp-edges;}
-  .wrap{max-width:760px;margin:0 auto;padding:30px 20px 72px;}
-  .eyebrow{font-family:var(--fui);font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;}
-  .chip{display:inline-block;font-family:var(--fpx);font-size:9px;letter-spacing:.06em;text-transform:uppercase;
-    background:var(--panel2);border:1px solid var(--line);color:var(--accent);padding:6px 9px;border-radius:7px;}
-  header.hd{display:flex;gap:18px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:22px;}
-  h1{font-family:var(--fhead);font-size:27px;margin:10px 0 6px;line-height:1.22;}
-  h2{font-family:var(--fhead);font-size:19px;margin:38px 0 10px;display:flex;align-items:center;gap:9px;}
-  h2::before{content:"";width:9px;height:9px;background:var(--accent);display:inline-block;box-shadow:9px 0 0 var(--accent2);}
-  h3{font-family:var(--fhead);font-size:15px;margin:22px 0 6px;color:var(--ink);}
-  p{margin:11px 0;color:#ded9ef;}
-  .lead{color:var(--muted);font-size:14px;margin-top:2px;}
-  .hero{width:112px;height:auto;flex:none;}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;box-shadow:0 8px 24px rgba(0,0,0,.32);}
-  .obj{margin-top:20px;} .obj ul{margin:8px 0 0;padding-left:18px;} .obj li{margin:6px 0;}
-  figure{margin:18px 0;text-align:center;}
-  figure img{max-width:100%;border:1px solid var(--line);border-radius:8px;background:#e7e4f0;padding:10px;}
-  figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;font-family:var(--fui);}
-  .twin{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  .twin figure{margin:8px 0;}
-  .twin img{width:100%;max-width:240px;}
-  .tag-good{color:var(--accent);} .tag-bad{color:var(--accent2);}
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0;}
-  .steps figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:10px 6px;}
-  .steps img{width:96px;border:none;background:#e7e4f0;border-radius:6px;padding:6px;}
-  .steps .sn{font-family:var(--fpx);font-size:8px;color:var(--accent);display:block;margin-bottom:6px;}
-  .steps figcaption{font-family:var(--fbody);font-size:11.5px;color:#ded9ef;margin-top:7px;line-height:1.45;}
-  .call{border-left:3px solid var(--accent);background:var(--panel2);border-radius:7px;padding:12px 15px;margin:16px 0;font-size:13.5px;color:#ded9ef;}
-  .call.mistake{border-left-color:var(--accent2);} .call.tip{border-left-color:var(--gold);}
-  .call b{color:var(--ink);}
-  .call .lbl{font-family:var(--fui);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:4px;}
-  .call.mistake .lbl{color:var(--accent2);} .call.tip .lbl{color:var(--gold);}
-  .reps{counter-reset:r;list-style:none;padding:0;margin:12px 0 0;}
-  .reps li{counter-increment:r;position:relative;padding:11px 0 11px 40px;border-bottom:1px solid var(--line);}
-  .reps li::before{content:counter(r);position:absolute;left:0;top:10px;width:25px;height:25px;background:var(--panel2);
-    border:1px solid var(--line);border-radius:6px;color:var(--accent);text-align:center;line-height:25px;font-weight:700;font-size:13px;font-family:var(--fui);}
-  .ck{font-family:var(--fui);font-size:11.5px;color:var(--accent);margin-top:5px;}
-  table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px;}
-  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top;}
-  th{color:var(--muted);font-family:var(--fui);font-weight:600;font-size:11px;letter-spacing:.07em;text-transform:uppercase;}
-  .recap{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;}
-  .recap ul{margin:8px 0 0;padding-left:18px;} .recap li{margin:5px 0;}
-  footer{margin-top:38px;border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center;}
-  .next{font-size:13px;color:var(--muted);font-family:var(--fui);} .next b{color:var(--ink);}
-  a{color:var(--accent);}
-  @media(max-width:560px){.twin,.steps{grid-template-columns:1fr}header.hd{flex-direction:column-reverse;align-items:flex-start}}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+  .deck{display:flex;flex-direction:column;height:100vh;max-width:1000px;margin:0 auto;padding:0 22px;}
+  .bar{display:flex;align-items:center;gap:16px;padding:16px 2px 10px;}
+  .brand{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase;white-space:nowrap;}
+  .pbar{display:flex;gap:6px;flex:1;}
+  .seg{height:4px;flex:1;background:var(--line);border-radius:2px;overflow:hidden;cursor:pointer;position:relative;}
+  .seg .f{position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .35s ease;}
+  .seg.done .f{transform:scaleX(1);}
+  .seg:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .home{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--ink-soft);text-decoration:none;border:1px solid var(--line-strong);padding:7px 13px;border-radius:8px;white-space:nowrap;}
+  .home:hover{border-color:var(--accent);color:var(--ink);}
+  .home:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .stage{position:relative;flex:1;overflow:hidden;}
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:14px;
+    padding:10px 6px 18px;opacity:0;transform:translateX(50px);transition:opacity .45s ease,transform .45s ease;pointer-events:none;overflow:auto;}
+  .slide.active{opacity:1;transform:none;pointer-events:auto;}
+  .slide.before{opacity:0;transform:translateX(-50px);}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;}
+  h1.cover{font-family:var(--disp);font-weight:600;font-size:clamp(34px,6.5vw,58px);line-height:1.05;letter-spacing:-1.2px;margin:8px 0 0;color:var(--ink);}
+  h1.cover em{font-style:normal;color:var(--accent);}
+  h2{font-family:var(--disp);font-weight:600;font-size:clamp(22px,4vw,31px);margin:0;color:var(--ink);line-height:1.15;}
+  h2:focus{outline:none;}
+  p{color:var(--ink-soft);font-size:clamp(15px,2.1vw,17px);line-height:1.6;margin:0;max-width:64ch;}
+  p.sub{color:var(--muted);} b{color:var(--ink);}
+  .hint{font-family:var(--mono);font-size:12px;color:var(--faint);margin-top:6px;}
+  figure{margin:4px 0;text-align:center;}
+  figure img{background:#e7e4f0;border:1px solid var(--line);border-radius:10px;padding:10px;max-width:100%;}
+  figcaption{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:8px;}
+  .row{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;} .row.center{justify-content:center;align-items:center;}
+  .col{flex:1 1 0;min-width:200px;}
+  .imgs4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;} .imgs3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;} .imgs2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .imgs4 img,.imgs3 img,.imgs2 img{width:100%;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
+  ul.clean{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;}
+  ul.clean li{display:flex;gap:12px;align-items:flex-start;font-size:clamp(15px,2.1vw,17px);color:var(--ink-soft);}
+  ul.clean li::before{content:"";flex:none;width:9px;height:9px;margin-top:8px;background:var(--accent);box-shadow:9px 0 0 var(--accent2);}
+  .tag-good{color:var(--accent);font-family:var(--mono);font-size:12px;} .tag-bad{color:var(--accent2);font-family:var(--mono);font-size:12px;}
+  .call{border-left:3px solid var(--gold);background:var(--panel2);border-radius:8px;padding:13px 16px;font-size:14px;color:var(--ink-soft);}
+  .call .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:4px;}
+  .call.bad{border-left-color:var(--accent2);} .call.bad .lbl{color:var(--accent2);}
+  .pill{display:inline-block;font-family:var(--px);font-size:9px;text-transform:uppercase;letter-spacing:.06em;background:var(--panel2);border:1px solid var(--line);color:var(--accent);padding:6px 9px;border-radius:7px;}
+  .ck{font-family:var(--mono);font-size:12px;color:var(--accent);margin-top:6px;}
+  .tools{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .tool{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 12px;}
+  .tool .nm{font-family:var(--disp);font-weight:700;font-size:14px;color:var(--ink);}
+  .tool p{font-size:12px;color:var(--muted);margin-top:5px;}
+  .badge{font-family:var(--mono);font-size:9px;letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:5px;float:right;}
+  .b-free{color:var(--accent);border:1px solid var(--accent);} .b-paid{color:var(--gold);border:1px solid var(--gold);}
+  /* generic flip widget */
+  .flipwrap .b{display:none;} .flipwrap.alt .a{display:none;} .flipwrap.alt .b{display:inline;}
+  .ibtn{font-family:var(--sans);font-weight:600;font-size:13px;cursor:pointer;border-radius:9px;padding:9px 16px;min-height:40px;background:var(--accent);color:#10331f;border:1px solid var(--accent);transition:.18s;}
+  .ibtn:hover{background:transparent;color:var(--accent);} .ibtn:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .reveal{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;} .reveal.shown{opacity:1;transform:none;}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 2px 18px;}
+  .navbtn{font-family:var(--sans);font-weight:600;font-size:14px;cursor:pointer;border-radius:10px;padding:11px 20px;min-height:44px;background:var(--panel);border:1px solid var(--line-strong);color:var(--ink-soft);transition:.18s;display:inline-flex;align-items:center;gap:8px;}
+  .navbtn:hover{border-color:var(--accent);color:var(--ink);} .navbtn[disabled]{opacity:.3;cursor:not-allowed;}
+  .navbtn.primary{background:var(--accent);color:#10331f;border-color:var(--accent);} .navbtn.primary:hover{background:transparent;color:var(--accent);}
+  .navbtn:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .count{font-family:var(--mono);font-size:12px;color:var(--muted);}
+  @media (prefers-reduced-motion: reduce){.slide{transition:none;}.reveal{transition:none;}.seg .f{transition:none;}.slide:not(.active){opacity:0;}.reveal{opacity:1;transform:none;}}
+  @media(max-width:560px){.imgs4,.imgs3{grid-template-columns:1fr 1fr;}.tools{grid-template-columns:1fr 1fr;}.brand{display:none;}}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="deck">
+  <div class="bar">
+    <div class="brand">Pixel Art Masterclass · M1</div>
+    <div class="pbar" id="pbar"></div>
+    <a class="home" href="../../index.html">Exit ✕</a>
+  </div>
+  <main class="stage" id="stage">
 
-  <header class="hd">
-    <div>
-      <div class="eyebrow">Pixel Art for Games · Masterclass · Phase 1: Foundations</div>
-      <h1>Line, Shape &amp; Silhouette</h1>
-      <div class="lead">The first thing any artist learns — and the thing pixel art tests most ruthlessly: can your shapes be read at a glance?</div>
-      <div style="margin-top:13px"><span class="chip">Module 1</span> &nbsp;<span class="chip">~22 min</span> &nbsp;<span class="chip">Lesson 2</span></div>
+  <section class="slide">
+    <div class="kicker">Phase 1 · Foundations · Module 1</div>
+    <h1 class="cover" tabindex="-1" data-focus>Line, Shape<br>&amp; <em>Silhouette</em></h1>
+    <p class="sub">The first thing any artist learns — and the thing pixel art tests most ruthlessly: can your shapes be read at a glance?</p>
+    <div class="hint">Press <b>→</b> or <b>Space</b> to advance · <b>←</b> to go back</div>
+  </section>
+  <section class="slide">
+    <div class="kicker">What you'll take away</div>
+    <h2 tabindex="-1" data-focus>By the end of this lesson</h2>
+    <ul class="clean">
+      <li class="reveal">Understand why <b>shape comes before detail</b> — the classical block-in.</li>
+      <li class="reveal">Use the <b>silhouette test</b> like a professional character designer.</li>
+      <li class="reveal">See <b>positive &amp; negative space</b> as something you compose.</li>
+      <li class="reveal">Draw <b>clean lines and curves</b> — and spot the jaggies.</li>
+    </ul>
+  </section>
+  <section class="slide">
+    <div class="kicker">1 · The principle</div>
+    <h2 tabindex="-1" data-focus>Shape before detail</h2>
+    <p>Every classical drawing program starts the same way: before a single detail, you establish the big <b>shapes</b>. Detail on a weak shape is decoration on a broken foundation.</p>
+    <div class="reveal call"><span class="lbl">Master study</span>Pull up three characters you love and squint until detail disappears. What's left — the shape — does all the work.</div>
+  </section>
+  <section class="slide">
+    <div class="kicker">2 · The silhouette test</div>
+    <h2 tabindex="-1" data-focus>If it reads in black, it works</h2>
+    <p>Fill your drawing solid black and ask whether it still reads. Pixel art makes this test instant — try it:</p>
+    <div class="row center" style="gap:22px">
+      <figure style="margin:0">
+        <span class="flipwrap" id="silWrap"><img class="a" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAADACAYAAADr7b1mAAADXklEQVR4nO3dIU6cQRiAYbZZ3SNsRc22shXLHfD1vQAGg6mqWVPTC9RzE5qAJGswHIEL0Dt0SL6Q93n8/8/sBt58ZmY3Z3H73eFleg/MOT3dbqb3MOnd9AaAOQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYeNnoafP41/eXU0uz7DfX3+Nrj99H4EJAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMK2qy9YPc/vPD6Tzm8uZjfw7Wzp/2f1PgETAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQt3wfAmr+Pp+ktEGYCgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgLDNfndY+n3yy7ur19rLf3GenkkP94+j6z8f1/7+TQAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQtp3ewFs/z//n8GN0/e+3P0fXX+X7m2UCgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgLDx+wDqPn04X3r+/ObilXbyNvn+1pgAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIGyz3x1eVl5QP09N28P94+j6z8fT0vMmAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAjbTm+gbvo8+ecvH0fXr3/+aSYACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACNvsd4eXlRe8v94vbWD6PPb0eXTano+npedPT7ebledNABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABC2XT1PvD+eLd0n8HC98jSwwgQAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYUt3AbyG/e6wdJ8AvGWr93GsMgFAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABA2D9+nE6IR/YA/wAAAABJRU5ErkJggg==" alt="Finished slime" style="width:150px"><img class="b" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAADACAYAAADr7b1mAAACqklEQVR4nO3csY3DQAwAQenhAhQoVP+VOXTgDuQa3meAwc7kBzBaMOHtW9x5XPf0DMx5vZ/79AyT/qYHAOYIAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAISN30K7x6ds+j8CGwCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCELd8iu+eHOav/CdgAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIGw/j+ueHgKYYQOAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAsMf0AMD3Xu/nvvLeBgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhS7fE27Zt53HdvxgE+D//AQBfEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIW/4PYJX/BChbvedfZQOAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAsA+TFhl97r7fRgAAAABJRU5ErkJggg==" alt="Black silhouette" style="width:150px"></span>
+        <figcaption id="silCap" data-capa="Finished sprite" data-capb="Solid-black silhouette — still reads">Finished sprite</figcaption>
+      </figure>
+      <button class="ibtn flip-btn" data-target="silWrap" data-cap="silCap" data-labela="Show silhouette" data-labelb="Show finished">Show silhouette</button>
     </div>
-    <img class="hero" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAADACAYAAADr7b1mAAADXklEQVR4nO3dIU6cQRiAYbZZ3SNsRc22shXLHfD1vQAGg6mqWVPTC9RzE5qAJGswHIEL0Dt0SL6Q93n8/8/sBt58ZmY3Z3H73eFleg/MOT3dbqb3MOnd9AaAOQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYeNnoafP41/eXU0uz7DfX3+Nrj99H4EJAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMK2qy9YPc/vPD6Tzm8uZjfw7Wzp/2f1PgETAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQt3wfAmr+Pp+ktEGYCgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgLDNfndY+n3yy7ur19rLf3GenkkP94+j6z8f1/7+TQAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQtp3ewFs/z//n8GN0/e+3P0fXX+X7m2UCgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgLDx+wDqPn04X3r+/ObilXbyNvn+1pgAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIGyz3x1eVl5QP09N28P94+j6z8fT0vMmAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAjbTm+gbvo8+ecvH0fXr3/+aSYACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACNvsd4eXlRe8v94vbWD6PPb0eXTano+npedPT7ebledNABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABC2XT1PvD+eLd0n8HC98jSwwgQAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYUt3AbyG/e6wdJ8AvGWr93GsMgFAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABA2D9+nE6IR/YA/wAAAABJRU5ErkJggg==" alt="Slime sprite">
-  </header>
-
-  <div class="card obj">
-    <div class="eyebrow">By the end of this lesson you will</div>
-    <ul>
-      <li>Understand why <b>shape comes before detail</b> — the classical "block-in" that underlies all drawing.</li>
-      <li>Use the <b>silhouette test</b> the way professional character designers do.</li>
-      <li>See <b>positive and negative space</b> as something you compose, not leftover.</li>
-      <li>Draw <b>clean lines and curves</b> in pixels — and recognize the jaggies that wreck them.</li>
-      <li>Build a readable object silhouette-first, then complete a graded assignment.</li>
+    <div class="reveal call"><span class="lbl">Why it works</span>The eye recognizes <b>outer shape</b> before interior detail. Nail the silhouette and the sprite is read before a single inside pixel is noticed.</div>
+  </section>
+  <section class="slide">
+    <div class="kicker">3 · Line quality in pixels</div>
+    <h2 tabindex="-1" data-focus>Keep the steps consistent</h2>
+    <p>A pixel line is a staircase. Even runs read clean; runs that jump around make <b>jaggies</b>. Curves change runs <i>gradually</i>.</p>
+    <div class="imgs2" style="max-width:560px">
+      <figure style="margin:0"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANgAAABsCAYAAAAIe3yOAAABrElEQVR4nO3bsU3DYBRG0T8oYgca197AM5EJGIEJzEzZIHUadqBigjQxVzjROQN83ZVe8w7ztKwDSBzHGOPn4+1969Dr5/fXX+1crufT1p15WlY7dv5752XrAHCbwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEIHH83QOY4xxp4+QOdpWX1Y23mWHScihAQGIYFBSGAQEhiEBAYhgUFIYBASGIQEBiGBQUhgEBIYhAQGIYFBSGAQ8tEMoV1+NO9tx4e1nXs5ESEkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5CPZgj5aH7AHR/Wj7PjRISQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEI+miHko9nO5h0f1rc5ESEkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5CPZgj5aLbzdDt7+rB2IkJIYBASGIQEBiGBQUhgEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBASGIQEBqFfni4f9cgo9zoAAAAASUVORK5CYII=" alt="clean line"><figcaption class="tag-good">Clean — even steps</figcaption></figure>
+      <figure style="margin:0"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANgAAABsCAYAAAAIe3yOAAABs0lEQVR4nO3dsW0CQRRF0cGiAyRCYjqgF3cABeEO3Is7cOzQkntwBSTevdIsPqeAl11pkq/ZnU+X+wAS+zHGeD8erkuHXr9/3j6/Pm5Ld86ny92OnWfZeVk6ADwmMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg9DORTN09mOMsdYF6FqX0bPtzHQha2dbO56IEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBASGIQEBiGBQUhgEBIYhAQGIYFByEUzhFa9aH7WHRfWdv7KExFCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAi5aIaQi+YN7riM3s6OJyKEBAYhgUFIYBASGIQEBiGBQUhgEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBBy0QwhF83/eGe2v6dn23HRDJMTGIQEBiGBQUhgEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBASGIQEBiGBQchFM4RcNNux82BnjctoT0QICQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCD0C5EmHzlW0jYtAAAAAElFTkSuQmCC" alt="jaggy line"><figcaption class="tag-bad">Jaggy — irregular runs</figcaption></figure>
+      <figure class="reveal" style="margin:0"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAB+CAYAAACNvjvgAAAByUlEQVR4nO3bsU0CUBSG0Qch7mBDzQbMpBMwghPATGxATeMOVvYm0jxJXj7PGeBWX3Gbf3PYH88DInZjjPF1en2bPfTy8Xlx5/Gd2/36PnvnsD+e3fnddvYArETQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCkbixVKdmOMsdLioHzHgub5d7wcpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJsVihRSLlX98p7h88XKQImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFIsVUixW3Jm+s9LyxctBiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUixWSLFYcWf6jsUKPImgSRE0KYImRdCkCJoUQZMiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIsVkixWHFnmTt/sXzxcpAiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIETYqgSRE0KYImRdCkCJoUixVSLFbcWeaOxQr8IGhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAialG+LFRchysDROwAAAABJRU5ErkJggg==" alt="smooth curve"><figcaption class="tag-good">Smooth — runs ease down</figcaption></figure>
+      <figure class="reveal" style="margin:0"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAB+CAYAAACNvjvgAAAB0ElEQVR4nO3dsU0DURRFwWfkDpAIHbsD90IHUJDpgF7cATEhEj2QO10Hn7MzBbxgdYKfXO3hfLpcByKOMzOfL89vWw+9/vx+rHbn6/v2vvXO+XS5uvN/7jxtPQArETQpgiZF0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNysFihZLjzMxKi4NH3rF82d8dTw5SBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTYrFCSnqxstryZbU7q31nixW4I2hSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFIsVUixWdnynuHzx5CBF0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJETQpFiukWKzs+E7xny+eHKQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJETQpgibFYoUUixV3lrnziOWLJwcpgiZF0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJsVghxWLFnWXuWKzAHUGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpPwBxEMVqVhSkGEAAAAASUVORK5CYII=" alt="lumpy curve"><figcaption class="tag-bad">Lumpy — runs jump</figcaption></figure>
+    </div>
+  </section>
+  <section class="slide">
+    <div class="kicker">4 · Worked example</div>
+    <h2 tabindex="-1" data-focus>Design from the silhouette out</h2>
+    <p>Readable shape first, clean edges second, the smallest detail last. Watch it build:</p>
+    <div class="imgs3" style="max-width:560px">
+      <figure class="reveal" style="margin:0"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAACfUlEQVR4nO3dsY0CQRAAwb8XAWBgkn9kmBhkAEGMMVp1lQ9aiWuNM3tcf3GP+/O7fYZN78/r2j7Dpv/tA8AmAZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIg7bZ9gNNt79PX7zNMmQCkCYA0AZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAace/G94+/K7t+xBTJgBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAWv7/AU7fZ5+q36cwAUgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApAmANAGQJgDS1nfhp/vo9X3+baf/fiYAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQNp4F/v0fXB2bT8/JgBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRA2rW9jw0T0+fXBCBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIu6Zf8Lg/v5PPvz+v8Rk41/bzYwKQJgDSBECaAEgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApK3v4k/3wTnb9n0QE4A0AZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIg7QfbozK9hTkMIgAAAABJRU5ErkJggg==" alt="silhouette"><figcaption><b>1 · Silhouette.</b> Reads as "potion"?</figcaption></figure>
+      <figure class="reveal" style="margin:0"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAACuUlEQVR4nO3csU0DURAAURtRAxExFRBQDzUQIApABK6BegiogJiIJqCIRVqd5r3cvi/bo032+3yKu725+90+w6bvn6/z9hk2XW0fADYJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBp19sHOLrtffr6fYYpE4A0AZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIg7fD/DT/dh395vP+voxzS6/vn6PXb9yGmTADSBECaAEgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApAmAtEPvcp9O8/sAR99nn6p/fiYAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQNr6Lvf2Pvrzx2X0/KN7e3gafX7b39+UCUCaAEgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApAmANAGQNt7F3t4Hr+/zbzv6fQITgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiDtvL2PbZ+/bfs+gQlAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkHaevsHtzd3v5PXfP1+jMzx/XEbPZ+bt4Wn0/W3/fkwA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgLTxfYCp6T44xzbd558yAUgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApAmANAGQJgDS/gA7zknSFKKyCAAAAABJRU5ErkJggg==" alt="clean+base"><figcaption><b>2 · Clean &amp; fill.</b> Tidy runs, flat base.</figcaption></figure>
+      <figure class="reveal" style="margin:0"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAC+klEQVR4nO3dMWpVQRSA4fska7ASKxFrEd2CRdYgwVUEq1SSFVhKsLRO4RYiYi1iJVa6CF3EEYbh/75+uMN7/Exz5t7TEffg/uO/q/ew0q/f30+r97DSvdUbgJUEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIgTQCkCYC0s9Ub2N2Hq5dLn//q6tPS5+/OCUCaAEgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApAmANAGQtv274afv93/z+tn/2sqW3r7/Mlq/+/cFnACkCYA0AZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaVvPch/H/D7A7vPsU/XfzwlAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkLZ8lnv1PPq7Px9Hz1/t893X0fqb8+vR77f6/5tyApAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIgTQCkjWexV8+DX9xebj3Pv7vd7xM4AUgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApAmANAGQJgDSTqvnsafz/M9fPJ0sH79fn5nV9wmcAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpZ6s3MGWenwknAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApAmANAGQJgDSBEDa9vcBmPnx7edo/aMnD0frV3+fwglAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkOY+QNx0nn9qOs8/vU/gBCBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIG81iH8f697tf3F6Ons/Mzfn10nl+3weAAQGQJgDSBECaAEgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIG18H2BqOg/O3qbz/FNOANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIgTQCkCYC0f5svXKO80au+AAAAAElFTkSuQmCC" alt="detail"><figcaption><b>3 · Minimal detail.</b> Cork, liquid, one highlight.</figcaption></figure>
+    </div>
+  </section>
+  <section class="slide">
+    <div class="kicker">5 · Guided practice</div>
+    <h2 tabindex="-1" data-focus>Your turn — in Aseprite</h2>
+    <div class="row">
+      <div class="col reveal card"><span class="pill">Rep 1</span><p style="margin-top:10px">Draw <b>three object silhouettes</b> (sword, key, mushroom) in solid black. Squint — does each read?</p><div class="ck">✓ All three recognizable as black shapes.</div></div>
+      <div class="col reveal card"><span class="pill">Rep 2</span><p style="margin-top:10px">Draw one long <b>line</b> and one <b>curve</b>, then fix every jaggy until runs are consistent.</p><div class="ck">✓ Clean line; smoothly easing curve.</div></div>
+    </div>
+  </section>
+  <section class="slide">
+    <div class="kicker">Graded assignment</div>
+    <h2 tabindex="-1" data-focus>Design for the silhouette</h2>
+    <p>Design a small prop or creature that <b>reads in pure silhouette</b>. Submit <b>two images</b>: the solid-black silhouette and a finished version with clean edges and minimal detail (16×16 or 24×24). Export ×8 to <span class="tag-good">submissions</span>.</p>
+    <div class="reveal card"><div class="kicker" style="margin-bottom:8px">We grade for</div>
+      <ul class="clean"><li>Silhouette reads — instantly recognizable in black.</li><li>Clean line — consistent runs, no jaggies or strays.</li><li>Restraint — detail supports the shape, never fights it.</li></ul></div>
+  </section>
+  <section class="slide">
+    <div class="kicker">Recap</div>
+    <h2 tabindex="-1" data-focus>What to carry forward</h2>
+    <ul class="clean">
+      <li class="reveal"><b>Shape before detail</b> — block the big shape first.</li>
+      <li class="reveal">The <b>silhouette test</b>: reads in black = strong design.</li>
+      <li class="reveal">Clean lines come from <b>consistent, gradually-changing runs</b>.</li>
     </ul>
+    <p class="sub reveal" style="margin-top:6px">Next → <b>Module 2 · Form &amp; Volume</b>. Press <b>Finish</b> to return and mark M1 complete.</p>
+  </section>
+
+  </main>
+  <div class="nav">
+    <button class="navbtn" id="prev">← Back</button>
+    <div class="count"><span id="cur">1</span> / <span id="tot">1</span></div>
+    <button class="navbtn primary" id="next">Next →</button>
   </div>
-
-  <h2>1 · The principle: shape before detail</h2>
-  <p>Every classical drawing program starts the same way: before a single detail, you establish the big
-  <b>shapes</b>. Atelier students block in masses; animators draw a pose as one flowing silhouette;
-  illustrators thumbnail in solid shapes the size of a postage stamp. Detail is the <i>last</i> thing added,
-  because detail on top of a weak shape is just decoration on a broken foundation.</p>
-  <p>Shape thinking also means seeing <b>negative space</b> — the gaps around and between forms. A skilled
-  artist composes the empty space as deliberately as the filled space; it's what gives a figure room to read.
-  Line, then, isn't decoration either: it's the edge where one shape meets another, and its job is clarity.</p>
-  <div class="call tip"><span class="lbl">Master study</span>Look at how animation studios design characters
-  to be <b>recognizable in pure black</b> — Mickey Mouse, a Pokémon, a chess piece. Pull up three characters
-  you love and squint until detail disappears. What you're left with is the shape doing all the work.</div>
-
-  <h2>2 · The silhouette test</h2>
-  <p>Here's the single most useful habit in this lesson: <b>fill your drawing solid black and ask whether it
-  still reads.</b> If the silhouette is clear, you have a strong design; if it turns to mush, no amount of
-  shading or color will rescue it. Pixel art makes this test instant — and unavoidable.</p>
-  <div class="twin">
-    <figure><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAADACAYAAADr7b1mAAACqklEQVR4nO3csY3DQAwAQenhAhQoVP+VOXTgDuQa3meAwc7kBzBaMOHtW9x5XPf0DMx5vZ/79AyT/qYHAOYIAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAISN30K7x6ds+j8CGwCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCELd8iu+eHOav/CdgAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIGw/j+ueHgKYYQOAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAsMf0AMD3Xu/nvvLeBgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhAgBhS7fE27Zt53HdvxgE+D//AQBfEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIW/4PYJX/BChbvedfZQOAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAsA+TFhl97r7fRgAAAABJRU5ErkJggg==" alt="silhouette"><figcaption class="tag-good">Reads as a rounded creature — pose &amp; form are clear in black.</figcaption></figure>
-    <figure><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAADACAYAAADr7b1mAAADXklEQVR4nO3dIU6cQRiAYbZZ3SNsRc22shXLHfD1vQAGg6mqWVPTC9RzE5qAJGswHIEL0Dt0SL6Q93n8/8/sBt58ZmY3Z3H73eFleg/MOT3dbqb3MOnd9AaAOQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYeNnoafP41/eXU0uz7DfX3+Nrj99H4EJAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMIEAMK2qy9YPc/vPD6Tzm8uZjfw7Wzp/2f1PgETAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQJAIQt3wfAmr+Pp+ktEGYCgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgLDNfndY+n3yy7ur19rLf3GenkkP94+j6z8f1/7+TQAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQtp3ewFs/z//n8GN0/e+3P0fXX+X7m2UCgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgDABgLDx+wDqPn04X3r+/ObilXbyNvn+1pgAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIGyz3x1eVl5QP09N28P94+j6z8fT0vMmAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAjbTm+gbvo8+ecvH0fXr3/+aSYACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACNvsd4eXlRe8v94vbWD6PPb0eXTano+npedPT7ebledNABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABC2XT1PvD+eLd0n8HC98jSwwgQAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYQIAYUt3AbyG/e6wdJ8AvGWr93GsMgFAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABAmABA2D9+nE6IR/YA/wAAAABJRU5ErkJggg==" alt="finished"><figcaption>The finished sprite. The silhouette did the heavy lifting first.</figcaption></figure>
-  </div>
-  <div class="call"><span class="lbl">Why it works</span>The eye recognizes <b>outer shape</b> before it
-  processes interior detail. Get the silhouette right and the brain has already "read" your sprite before it
-  notices a single pixel inside it.</div>
-
-  <h2>3 · Line quality in pixels</h2>
-  <p>Now the medium-specific craft. A pixel line is a staircase, and its smoothness depends entirely on
-  keeping the <b>steps consistent</b>. Even runs of pixels read as a clean line; runs that jump around
-  (1, then 3, then 1) create bumps we call <b>jaggies</b>.</p>
-  <div class="twin">
-    <figure><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANgAAABsCAYAAAAIe3yOAAABrElEQVR4nO3bsU3DYBRG0T8oYgca197AM5EJGIEJzEzZIHUadqBigjQxVzjROQN83ZVe8w7ztKwDSBzHGOPn4+1969Dr5/fXX+1crufT1p15WlY7dv5752XrAHCbwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEIHH83QOY4xxp4+QOdpWX1Y23mWHScihAQGIYFBSGAQEhiEBAYhgUFIYBASGIQEBiGBQUhgEBIYhAQGIYFBSGAQ8tEMoV1+NO9tx4e1nXs5ESEkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5CPZgj5aH7AHR/Wj7PjRISQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEI+miHko9nO5h0f1rc5ESEkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg5CPZgj5aLbzdDt7+rB2IkJIYBASGIQEBiGBQUhgEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBASGIQEBqFfni4f9cgo9zoAAAAASUVORK5CYII=" alt="clean line"><figcaption class="tag-good">Clean — even 2-pixel steps the whole way down.</figcaption></figure>
-    <figure><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANgAAABsCAYAAAAIe3yOAAABs0lEQVR4nO3dsW0CQRRF0cGiAyRCYjqgF3cABeEO3Is7cOzQkntwBSTevdIsPqeAl11pkq/ZnU+X+wAS+zHGeD8erkuHXr9/3j6/Pm5Ld86ny92OnWfZeVk6ADwmMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAgJDEICg9DORTN09mOMsdYF6FqX0bPtzHQha2dbO56IEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBASGIQEBiGBQUhgEBIYhAQGIYFByEUzhFa9aH7WHRfWdv7KExFCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCAkMAi5aIaQi+YN7riM3s6OJyKEBAYhgUFIYBASGIQEBiGBQUhgEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBBy0QwhF83/eGe2v6dn23HRDJMTGIQEBiGBQUhgEBIYhAQGIYFBSGAQEhiEBAYhgUFIYBASGIQEBiGBQchFM4RcNNux82BnjctoT0QICQxCAoOQwCAkMAgJDEICg5DAICQwCAkMQgKDkMAgJDAICQxCAoOQwCD0C5EmHzlW0jYtAAAAAElFTkSuQmCC" alt="jagged line"><figcaption class="tag-bad">Jaggy — irregular runs create visible bumps.</figcaption></figure>
-  </div>
-  <p>Curves follow the same logic, but the run lengths <b>change gradually</b> — long runs easing into short
-  ones (5, 3, 2, 1). When the progression is smooth, the curve is smooth; when it stutters, the curve looks
-  lumpy.</p>
-  <div class="twin">
-    <figure><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAB+CAYAAACNvjvgAAAByUlEQVR4nO3bsU0CUBSG0Qch7mBDzQbMpBMwghPATGxATeMOVvYm0jxJXj7PGeBWX3Gbf3PYH88DInZjjPF1en2bPfTy8Xlx5/Gd2/36PnvnsD+e3fnddvYArETQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCkbixVKdmOMsdLioHzHgub5d7wcpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJsVihRSLlX98p7h88XKQImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFIsVUixW3Jm+s9LyxctBiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUixWSLFYcWf6jsUKPImgSRE0KYImRdCkCJoUQZMiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIsVkixWHFnmTt/sXzxcpAiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIETYqgSRE0KYImRdCkCJoUixVSLFbcWeaOxQr8IGhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAialG+LFRchysDROwAAAABJRU5ErkJggg==" alt="smooth curve"><figcaption class="tag-good">Smooth — runs shorten steadily.</figcaption></figure>
-    <figure><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAB+CAYAAACNvjvgAAAB0ElEQVR4nO3dsU0DURRFwWfkDpAIHbsD90IHUJDpgF7cATEhEj2QO10Hn7MzBbxgdYKfXO3hfLpcByKOMzOfL89vWw+9/vx+rHbn6/v2vvXO+XS5uvN/7jxtPQArETQpgiZF0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNysFihZLjzMxKi4NH3rF82d8dTw5SBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTYrFCSnqxstryZbU7q31nixW4I2hSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFIsVUixWdnynuHzx5CBF0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJETQpFiukWKzs+E7xny+eHKQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJETQpgibFYoUUixV3lrnziOWLJwcpgiZF0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJsVghxWLFnWXuWKzAHUGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpPwBxEMVqVhSkGEAAAAASUVORK5CYII=" alt="lumpy curve"><figcaption class="tag-bad">Lumpy — run lengths jump around.</figcaption></figure>
-  </div>
-  <div class="call mistake"><span class="lbl">Common mistakes</span>Watch for three line killers: <b>doubles</b>
-  (two stacked pixels breaking a clean run), <b>isolated single pixels</b> jutting off an edge, and
-  <b>inconsistent line weight</b> (a line that's 1px here and 2px there). Zoom out often — jaggies hide at 100%.</div>
-
-  <h2>4 · Worked example: design from the silhouette out</h2>
-  <p>We'll build a potion. Notice the order — exactly the principle in action: <b>readable shape first</b>,
-  clean edges second, the smallest possible detail last.</p>
-  <div class="steps">
-    <figure><span class="sn">Step 1</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAACfUlEQVR4nO3dsY0CQRAAwb8XAWBgkn9kmBhkAEGMMVp1lQ9aiWuNM3tcf3GP+/O7fYZN78/r2j7Dpv/tA8AmAZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIg7bZ9gNNt79PX7zNMmQCkCYA0AZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAace/G94+/K7t+xBTJgBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAWv7/AU7fZ5+q36cwAUgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApAmANAGQJgDS1nfhp/vo9X3+baf/fiYAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQNp4F/v0fXB2bT8/JgBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRA2rW9jw0T0+fXBCBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIu6Zf8Lg/v5PPvz+v8Rk41/bzYwKQJgDSBECaAEgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApK3v4k/3wTnb9n0QE4A0AZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIg7QfbozK9hTkMIgAAAABJRU5ErkJggg==" alt="silhouette"><figcaption><b>Silhouette.</b> Solid black. Does "potion" read instantly? If yes, the design is sound.</figcaption></figure>
-    <figure><span class="sn">Step 2</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAACuUlEQVR4nO3csU0DURAAURtRAxExFRBQDzUQIApABK6BegiogJiIJqCIRVqd5r3cvi/bo032+3yKu725+90+w6bvn6/z9hk2XW0fADYJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBp19sHOLrtffr6fYYpE4A0AZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIg7fD/DT/dh395vP+voxzS6/vn6PXb9yGmTADSBECaAEgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApAmAtEPvcp9O8/sAR99nn6p/fiYAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQNr6Lvf2Pvrzx2X0/KN7e3gafX7b39+UCUCaAEgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApAmANAGQNt7F3t4Hr+/zbzv6fQITgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiDtvL2PbZ+/bfs+gQlAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkHaevsHtzd3v5PXfP1+jMzx/XEbPZ+bt4Wn0/W3/fkwA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgLTxfYCp6T44xzbd558yAUgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApAmANAGQJgDS/gA7zknSFKKyCAAAAABJRU5ErkJggg==" alt="outline base"><figcaption><b>Clean &amp; fill.</b> Tidy the edges into smooth runs, drop in a flat base color.</figcaption></figure>
-    <figure><span class="sn">Step 3</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAC+klEQVR4nO3dMWpVQRSA4fska7ASKxFrEd2CRdYgwVUEq1SSFVhKsLRO4RYiYi1iJVa6CF3EEYbh/75+uMN7/Exz5t7TEffg/uO/q/ew0q/f30+r97DSvdUbgJUEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIgTQCkCYC0s9Ub2N2Hq5dLn//q6tPS5+/OCUCaAEgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApAmANAGQtv274afv93/z+tn/2sqW3r7/Mlq/+/cFnACkCYA0AZAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaVvPch/H/D7A7vPsU/XfzwlAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkLZ8lnv1PPq7Px9Hz1/t893X0fqb8+vR77f6/5tyApAmANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIgTQCkjWexV8+DX9xebj3Pv7vd7xM4AUgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApAmANAGQJgDSTqvnsafz/M9fPJ0sH79fn5nV9wmcAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpZ6s3MGWenwknAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIE0ApAmANAGQJgDSBEDa9vcBmPnx7edo/aMnD0frV3+fwglAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkOY+QNx0nn9qOs8/vU/gBCBNAKQJgDQBkCYA0gRAmgBIEwBpAiBNAKQJgDQBkCYA0gRAmgBIG81iH8f697tf3F6Ons/Mzfn10nl+3weAAQGQJgDSBECaAEgTAGkCIE0ApAmANAGQJgDSBECaAEgTAGkCIG18H2BqOg/O3qbz/FNOANIEQJoASBMAaQIgTQCkCYA0AZAmANIEQJoASBMAaQIgTQCkCYC0f5svXKO80au+AAAAAElFTkSuQmCC" alt="detail"><figcaption><b>Minimal detail.</b> Cork, a liquid line, one highlight. Just enough — no more.</figcaption></figure>
-  </div>
-  <p>The whole object is carried by its shape. The interior detail is almost an afterthought — which is
-  exactly how it should be. Restraint here is the fundamental, not the pixels.</p>
-
-  <h2>5 · Guided practice</h2>
-  <p>Two reps in Aseprite. Work small and solid — this is shape training, not a rendering exercise.</p>
-  <ol class="reps">
-    <li>Draw <b>three different object silhouettes</b> (e.g., sword, key, mushroom) in solid black on small canvases. Squint at each — does it read without any interior detail?
-      <div class="ck">✓ Checkpoint: all three are recognizable as pure black shapes.</div></li>
-    <li>Draw one long diagonal <b>line</b> and one <b>curve</b>, then go back and fix every jaggy until the runs are consistent.
-      <div class="ck">✓ Checkpoint: clean, even line; smoothly easing curve.</div></li>
-  </ol>
-
-  <h3>Graded assignment</h3>
-  <p>Design a <b>small game prop or creature that reads in pure silhouette</b>. Submit <b>two images</b>: the
-  solid-black silhouette, and a finished version with clean edges and minimal interior detail (a 16×16 or
-  24×24 canvas is ideal). Export both as PNGs scaled ×8 into your submissions folder. The point is the
-  fundamental — strong shape, clean line — not how much detail you can pack in.</p>
-  <table>
-    <tr><th>Criterion</th><th>What we look for</th></tr>
-    <tr><td>Silhouette reads</td><td>The black-only version is instantly recognizable as the intended object.</td></tr>
-    <tr><td>Shape &amp; negative space</td><td>Clear, intentional outer shape; the gaps around it help it read.</td></tr>
-    <tr><td>Clean line</td><td>Consistent runs — no jaggies, doubles, or stray single pixels.</td></tr>
-    <tr><td>Restraint</td><td>Interior detail is minimal and supports the shape rather than fighting it.</td></tr>
-    <tr><td>Export</td><td>Both images delivered, upscaled, clearly named, in the submissions folder.</td></tr>
-  </table>
-
-  <h2>Recap</h2>
-  <div class="recap">
-    <ul>
-      <li><b>Shape before detail</b> — block the big shape first; detail is the last 10%.</li>
-      <li>The <b>silhouette test</b>: if it reads in solid black, the design is strong.</li>
-      <li>Compose <b>negative space</b> deliberately; line is just the clear edge between shapes.</li>
-      <li>Clean pixel lines/curves come from <b>consistent, gradually-changing runs</b>.</li>
-    </ul>
-  </div>
-
-  <footer>
-    <div class="next">Next up → <b>Module 2 · Form &amp; Volume</b>: turning flat shapes into believable 3D form.</div>
-    <span class="chip">End of M1</span>
-  </footer>
-
-  <div class="call mistake" style="margin-top:26px">
-    <span class="lbl">Superintendent's note (for Cole)</span>This is the first Phase-1 foundations lesson — it
-    sets the "classical principle → master study → apply in pixels" pattern for the rest. React to the
-    fundamentals-forward balance, the master-study callouts, and difficulty. Sign off and I'll batch M2 (Form)
-    and M3 (Value) to match.
-  </div>
-
+  <div class="sr" aria-live="polite" id="live"></div>
 </div>
+<script>
+(function(){
+  var stage=document.getElementById('stage');
+  var slides=[].slice.call(stage.querySelectorAll('.slide'));
+  var pbar=document.getElementById('pbar');
+  var prevB=document.getElementById('prev'), nextB=document.getElementById('next');
+  var curEl=document.getElementById('cur'), totEl=document.getElementById('tot'), live=document.getElementById('live');
+  var i=0, rev=0;
+  totEl.textContent=slides.length;
+  var segs=slides.map(function(s,k){
+    var d=document.createElement('div'); d.className='seg'; d.tabIndex=0; d.setAttribute('role','button'); d.setAttribute('aria-label','Go to step '+(k+1));
+    d.innerHTML='<span class="f"></span>';
+    d.onclick=function(){ i=k; rev=reveals(slides[i]).length; paint(); };
+    d.onkeydown=function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); d.onclick(); } };
+    pbar.appendChild(d); return d;
+  });
+  function reveals(s){ return [].slice.call(s.querySelectorAll('.reveal')); }
+  function paint(){
+    slides.forEach(function(s,k){ s.classList.remove('active','before'); if(k<i) s.classList.add('before'); else if(k===i) s.classList.add('active'); });
+    var rs=reveals(slides[i]); rs.forEach(function(el,k){ el.classList.toggle('shown', k<rev); });
+    segs.forEach(function(d,k){ d.classList.toggle('done', k<=i); });
+    curEl.textContent=i+1;
+    prevB.disabled=(i===0 && rev===0);
+    nextB.textContent=(i===slides.length-1 && rev>=rs.length) ? 'Finish ✓' : 'Next →';
+    var h=slides[i].querySelector('[data-focus]'); if(h){ try{ h.focus({preventScroll:true}); }catch(e){ h.focus(); } }
+    live.textContent='Step '+(i+1)+' of '+slides.length;
+  }
+  function next(){
+    var rs=reveals(slides[i]);
+    if(rev<rs.length){ rev++; paint(); return; }
+    if(i<slides.length-1){ i++; rev=0; paint(); } else { window.location.href='../../index.html'; }
+  }
+  function prev(){ if(i>0){ i--; rev=reveals(slides[i]).length; paint(); } else if(rev>0){ rev=0; paint(); } }
+  nextB.onclick=next; prevB.onclick=prev;
+  document.addEventListener('keydown',function(e){
+    if((e.key===' '||e.key==='Enter') && e.target && (e.target.tagName==='BUTTON'||e.target.classList.contains('seg')||e.target.classList.contains('ibtn'))) return;
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='Enter'){ e.preventDefault(); next(); }
+    else if(e.key==='ArrowLeft'){ e.preventDefault(); prev(); }
+  });
+  /* generic flip widgets */
+  [].slice.call(document.querySelectorAll('.flip-btn')).forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var wrap=document.getElementById(btn.getAttribute('data-target')); if(!wrap)return;
+      var on=wrap.classList.toggle('alt');
+      var la=btn.getAttribute('data-labela'), lb=btn.getAttribute('data-labelb'); if(la&&lb) btn.textContent=on?lb:la;
+      var capId=btn.getAttribute('data-cap'); if(capId){ var cap=document.getElementById(capId); if(cap){ cap.textContent=on?cap.getAttribute('data-capb'):cap.getAttribute('data-capa'); } }
+    });
+  });
+  paint();
+})();
+</script>
 </body>
 </html>
